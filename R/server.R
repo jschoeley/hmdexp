@@ -9,10 +9,10 @@ library(gridExtra)
 # Input -------------------------------------------------------------------
 
 # human mortality data
-load("../data/hmdmx.Rdata")
+load("../priv/data/hmdmx.Rdata")
 
 # list of countries in data
-load("../data/hmdcbook.Rdata")
+load("../priv/data/hmdcbook.Rdata")
 
 # Shiny -------------------------------------------------------------------
 
@@ -26,6 +26,44 @@ shinyServer(function(input, output, session) {
            country   == input$country,
            sex       == input$sex,
            timebase  == input$timebase)
+  })
+
+  # Plot Title ------------------------------------------------------------
+
+  output$plot_title <- renderText({
+
+    # import user-filtered data
+    dataset <- dataset()
+
+    # Plot Title Generation -----------------------------------------------
+
+    # title: timebase labels
+    if (dataset$timebase[1] == "period") timebase_title <- "Period"
+    if (dataset$timebase[1] == "cohort") timebase_title <- "Cohort"
+
+    # title: sex labels
+    country_title <- hmdcbook[hmdcbook$Code == dataset$country[1], 2]
+    if (dataset$sex[1] == "f")  sex_title  <- "Female"
+    if (dataset$sex[1] == "m")  sex_title  <- "Male"
+    if (dataset$sex[1] == "fm") sex_title  <- "Total"
+
+    # title: year labels
+    # base year range on available data
+    dataset_naomit <- na.omit(dataset)
+    year_min_title <- min(dataset_naomit$year)
+    year_max_title <- max(dataset_naomit$year)
+    year_title     <- paste(year_min_title, "to", year_max_title)
+    # if no data
+    if (year_title == "Inf to -Inf") year_title <- "No Data Availabe"
+
+    plot_title <- paste0("Age-specific ", timebase_title, " Mortality Rates of",
+                         country_title, ", ",
+                         sex_title, " Population", ", ",
+                         year_title,
+                         "\n")
+
+    print(plot_title)
+
   })
 
   # Heatmap Plot ----------------------------------------------------------
@@ -60,33 +98,6 @@ shinyServer(function(input, output, session) {
     # age breaks & labels for y-scale
     ybreak <- seq(0, 110, 10)
 
-    # Plot Title Generation -----------------------------------------------
-
-    # title: timebase labels
-    if (dataset$timebase[1] == "period") timebase_title <- "Period"
-    if (dataset$timebase[1] == "cohort") timebase_title <- "Cohort"
-
-    # title: sex labels
-    country_title <- hmdcbook[hmdcbook$Code == dataset$country[1], 2]
-    if (dataset$sex[1] == "f")  sex_title  <- "Female"
-    if (dataset$sex[1] == "m")  sex_title  <- "Male"
-    if (dataset$sex[1] == "fm") sex_title  <- "Total"
-
-    # title: year labels
-    # base year range on available data
-    dataset_naomit <- na.omit(dataset)
-    year_min_title <- min(dataset_naomit$year)
-    year_max_title <- max(dataset_naomit$year)
-    year_title     <- paste(year_min_title, "to", year_max_title)
-    # if no data
-    if (year_title == "Inf to -Inf") year_title <- "No Data Availabe"
-
-    plot_title <- paste0("Age-specific ", timebase_title, " Mortality Rates of",
-                         country_title, "\n",
-                         sex_title, " Population", ", ",
-                         year_title,
-                         "\n")
-
     # Discretize mx -------------------------------------------------------
 
     # generate timeline of discrete mx
@@ -113,9 +124,7 @@ shinyServer(function(input, output, session) {
                          breaks = ybreak,
                          expand = c(0, 0.5)) +
       # equidistant xy-coordinates
-      coord_equal() +
-      # plot title
-      ggtitle(plot_title)
+      coord_equal()
 
     print(plot_mx)
 

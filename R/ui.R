@@ -4,7 +4,7 @@ library(ggplot2)
 # Input -------------------------------------------------------------------
 
 # list of countries in data
-load("../data/hmdcbook.Rdata")
+load("../priv/data/hmdcbook.Rdata")
 cntry_code  <- hmdcbook$Code
 
 # Page Layout -------------------------------------------------------------
@@ -12,16 +12,18 @@ cntry_code  <- hmdcbook$Code
 shinyUI(fluidPage(theme = "bootstrap.css",
 
   # Header ----------------------------------------------------------------
-  h4("Human Mortality Database Explorer"),
+  h3("Human Mortality Database Explorer"),
 
   hr(),
 
   # Main Panel ------------------------------------------------------------
 
   fluidRow(
-    column(12,
-           plotOutput("plot"))
+    column(12, h4(textOutput("plot_title"), align = "center"))
     ),
+  fluidRow(
+    column(12, plotOutput("plot"))
+  ),
 
   hr(),
 
