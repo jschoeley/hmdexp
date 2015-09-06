@@ -124,7 +124,8 @@ shinyServer(function(input, output, session) {
                          breaks = ybreak,
                          expand = c(0, 0.5)) +
       # equidistant xy-coordinates
-      coord_equal()
+      coord_equal() +
+      theme(plot.margin = unit(c(0, 0, 0, 0), units = "cm"))
 
     print(plot_mx)
 
