@@ -70,7 +70,7 @@ shinyServer(function(input, output, session) {
       # heatmap
       geom_tile(aes(fill = mx)) +
       # discrete colour scale
-      scale_fill_brewer(expression(m(x)%*%10000), palette = 16) +
+      scale_fill_brewer(expression(m(x)%*%10000), palette = "PuBuGn") +
       guides(fill = guide_legend(reverse = TRUE)) +
       # custom xy scale labels
       scale_x_continuous("Year", limits = c(1670, 2015),
@@ -82,8 +82,14 @@ shinyServer(function(input, output, session) {
       # equidistant xy-coordinates
       coord_equal() +
       theme(plot.margin = unit(c(0, 0, 0, 0), units = "cm"),
-            panel.background = element_blank(),
-            plot.background  = element_blank())
+            panel.background  = element_blank(),
+            plot.background   = element_blank(),
+            legend.background = element_blank(),
+            axis.title        = element_text(colour = "#E5E5E5"),
+            axis.ticks        = element_blank(),
+            legend.key        = element_blank(),
+            legend.text       = element_text(colour = "white"),
+            legend.title      = element_text(colour = "white"))
 
     print(plot_mx)
 
