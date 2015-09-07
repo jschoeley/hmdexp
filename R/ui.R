@@ -1,7 +1,6 @@
-library(shiny)
-library(ggplot2)
-
 # Input -------------------------------------------------------------------
+
+source("./init.R")
 
 # list of countries in data
 load("../priv/data/hmdcbook.Rdata")

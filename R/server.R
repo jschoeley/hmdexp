@@ -1,12 +1,7 @@
-# Init --------------------------------------------------------------------
-
-library(shiny)
-library(dplyr)
-library(ggplot2)
-library(grid)
-library(gridExtra)
-
 # Input -------------------------------------------------------------------
+
+source("./init.R")
+source("./function_def.R")
 
 # human mortality data
 load("../priv/data/hmdmx.Rdata")
@@ -73,15 +68,6 @@ shinyServer(function(input, output, session) {
     # import user-filtered data
     dataset <- dataset()
 
-    # mortality rate scaling factor
-    scale  <- 10000
-    # mortality rate breaks for discrete colour scale
-    breaks <- c(0,
-      0.0001, 0.0005,
-      0.001, 0.005,
-      0.01, 0.05,
-      0.1, 0.5, 10) * scale
-
     # year breaks for x-scale
     xbreak <- c(1670, seq(1680, 1690, 10),
                 1700, seq(1710, 1790, 10),
@@ -100,11 +86,7 @@ shinyServer(function(input, output, session) {
 
     # Discretize mx -------------------------------------------------------
 
-    # generate timeline of discrete mx
-    dataset %>%
-      mutate(mx = cut(mx*scale,
-                      breaks = breaks,
-                      include.lowest = TRUE)) -> years_of_mx
+    years_of_mx <- DiscretizeMx(dataset)
 
     # Plot ----------------------------------------------------------------
 
