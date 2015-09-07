@@ -1,12 +1,12 @@
 # Input -------------------------------------------------------------------
 
-source("./init.R")
-source("./function_def.R")
+source("./init.R")         # load libraries
+source("./function_def.R") # load function definitions
 
-# human mortality data
+# load human mortality data
 load("../priv/data/hmdmx.Rdata")
 
-# list of countries in data
+# load list of countries in data
 load("../priv/data/hmdcbook.Rdata")
 
 # Shiny -------------------------------------------------------------------
@@ -23,45 +23,19 @@ shinyServer(function(input, output, session) {
            timebase  == input$timebase)
   })
 
-  # Plot Title ------------------------------------------------------------
+  # Output: Mx Plot Title --------------------------------------------------
 
   output$plot_title <- renderText({
 
     # import user-filtered data
     dataset <- dataset()
 
-    # Plot Title Generation -----------------------------------------------
-
-    # title: timebase labels
-    if (dataset$timebase[1] == "period") timebase_title <- "Period"
-    if (dataset$timebase[1] == "cohort") timebase_title <- "Cohort"
-
-    # title: sex labels
-    country_title <- hmdcbook[hmdcbook$Code == dataset$country[1], 2]
-    if (dataset$sex[1] == "f")  sex_title  <- "Female"
-    if (dataset$sex[1] == "m")  sex_title  <- "Male"
-    if (dataset$sex[1] == "fm") sex_title  <- "Total"
-
-    # title: year labels
-    # base year range on available data
-    dataset_naomit <- na.omit(dataset)
-    year_min_title <- min(dataset_naomit$year)
-    year_max_title <- max(dataset_naomit$year)
-    year_title     <- paste(year_min_title, "to", year_max_title)
-    # if no data
-    if (year_title == "Inf to -Inf") year_title <- "No Data Availabe"
-
-    plot_title <- paste0("Age-specific ", timebase_title, " Mortality Rates of",
-                         country_title, ", ",
-                         sex_title, " Population", ", ",
-                         year_title,
-                         "\n")
-
-    plot_title
+    # generate plot title based on subsetted dataset
+    GeneratePlotTitle(x = dataset, hmd_country_codes = hmdcbook)
 
   })
 
-  # Heatmap Plot ----------------------------------------------------------
+  # Output: Heatmap Plot ---------------------------------------------------
 
   output$plot <- renderPlot({
 
@@ -111,6 +85,5 @@ shinyServer(function(input, output, session) {
 
     print(plot_mx)
 
-  }
-  )
+  })
 })
