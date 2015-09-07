@@ -42,22 +42,6 @@ shinyServer(function(input, output, session) {
     # import user-filtered data
     dataset <- dataset()
 
-    # year breaks for x-scale
-    xbreak <- c(1670, seq(1680, 1690, 10),
-                1700, seq(1710, 1790, 10),
-                1800, seq(1810, 1890, 10),
-                1900, seq(1910, 1990, 10),
-                2000, 2010)
-    # year labels for x-scale
-    xlabel <- c(1670, paste0("'", seq(80, 90, 10)),
-                1700, paste0("'", seq(10, 90, 10)),
-                1800, paste0("'", seq(10, 90, 10)),
-                1900, paste0("'", seq(10, 90, 10)),
-                2000, "'10")
-
-    # age breaks & labels for y-scale
-    ybreak <- seq(0, 110, 10)
-
     # Discretize mx -------------------------------------------------------
 
     years_of_mx <- DiscretizeMx(dataset)
@@ -65,31 +49,7 @@ shinyServer(function(input, output, session) {
     # Plot ----------------------------------------------------------------
 
     # generate heatmap
-    plot_mx <-
-      ggplot(years_of_mx, aes(x = year, y = age)) +
-      # heatmap
-      geom_tile(aes(fill = mx)) +
-      # discrete colour scale
-      scale_fill_brewer(expression(m(x)%*%10000), palette = "PuBuGn") +
-      guides(fill = guide_legend(reverse = TRUE)) +
-      # custom xy scale labels
-      scale_x_continuous("Year", limits = c(1670, 2015),
-                         breaks = xbreak, labels = xlabel,
-                         expand = c(0, 0.5)) +
-      scale_y_continuous("Age",
-                         breaks = ybreak,
-                         expand = c(0, 0.5)) +
-      # equidistant xy-coordinates
-      coord_equal() +
-      theme(plot.margin = unit(c(0, 0, 0, 0), units = "cm"),
-            panel.background  = element_blank(),
-            plot.background   = element_blank(),
-            legend.background = element_blank(),
-            axis.title        = element_text(colour = "#E5E5E5"),
-            axis.ticks        = element_blank(),
-            legend.key        = element_blank(),
-            legend.text       = element_text(colour = "white"),
-            legend.title      = element_text(colour = "white"))
+    plot_mx <- PlotMx(years_of_mx)
 
     print(plot_mx)
 
