@@ -8,23 +8,22 @@ cntry_code  <- hmdcbook$Code
 
 # Page Layout -------------------------------------------------------------
 
-shinyUI(fluidPage(theme = "bootstrap.css",
+shinyUI(
+  navbarPage(title = "Human Mortality Database Explorer", theme = "bootstrap.css",
+             tabPanel("Mortality Rates",
 
-  # Header ----------------------------------------------------------------
-  h3("Human Mortality Database Explorer"),
+                      # Mx Pannel -----------------------------------------
 
-  hr(),
+                      fluidRow(
+                        column(12, h4(textOutput("plot_title"), align = "center"))
+                      ),
+                      fluidRow(
+                        column(12, plotOutput("plot"))
+                      ),
 
-  # Main Panel ------------------------------------------------------------
+                      hr()
 
-  fluidRow(
-    column(12, h4(textOutput("plot_title"), align = "center"))
-    ),
-  fluidRow(
-    column(12, plotOutput("plot"))
-  ),
-
-  hr(),
+             ),
 
   # Bottom Panel ----------------------------------------------------------
 
