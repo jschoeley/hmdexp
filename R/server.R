@@ -81,9 +81,11 @@ shinyServer(function(input, output, session) {
                          expand = c(0, 0.5)) +
       # equidistant xy-coordinates
       coord_equal() +
-      theme(plot.margin = unit(c(0, 0, 0, 0), units = "cm"))
+      theme(plot.margin = unit(c(0, 0, 0, 0), units = "cm"),
+            panel.background = element_blank(),
+            plot.background  = element_blank())
 
     print(plot_mx)
 
-  })
+  }, bg="transparent")
 })
