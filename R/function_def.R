@@ -1,5 +1,6 @@
 # Functions ---------------------------------------------------------------
 
+# Discretize a continuous mx vector
 DiscretizeMx <- function (x) {
 
   # mortality rate scaling factor
@@ -21,7 +22,7 @@ DiscretizeMx <- function (x) {
 
 }
 
-
+# Generate a plot title based on the data subset displayed
 GeneratePlotTitle <- function (x, hmd_country_codes) {
 
   # title: timebase labels
@@ -53,6 +54,7 @@ GeneratePlotTitle <- function (x, hmd_country_codes) {
 
 }
 
+# plot mx values
 PlotMx <- function (x) {
 
   # year breaks for x-scale
