@@ -62,7 +62,7 @@ shinyServer(function(input, output, session) {
                          year_title,
                          "\n")
 
-    print(plot_title)
+    plot_title
 
   })
 
@@ -80,7 +80,7 @@ shinyServer(function(input, output, session) {
       0.0001, 0.0005,
       0.001, 0.005,
       0.01, 0.05,
-      0.1, 0.5) * scale
+      0.1, 0.5, 10) * scale
 
     # year breaks for x-scale
     xbreak <- c(1670, seq(1680, 1690, 10),
