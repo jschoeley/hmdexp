@@ -47,7 +47,7 @@ shinyServer(function(input, output, session) {
   output$plot_mx_sex_diff_title <- renderText({
 
     # generate plot title based on subsetted dataset
-    GenerateMxSexDiffPlotTitle(x = dataset_mx(), hmd_country_codes = hmdcbook)
+    GenerateMxSexDiffPlotTitle(x = dataset_mx_sex_diff(), hmd_country_codes = hmdcbook)
 
   })
 
