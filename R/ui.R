@@ -8,30 +8,49 @@ cntry_code  <- hmdcbook$Code
 
 # UI Blocks ---------------------------------------------------------------
 
-# country dropdown menu
-cnty_dropdown <-
+# country dropdown menu (plain mx panel)
+cnty_dropdown_mx <-
   column(4,
-         selectInput("country",
+         selectInput("country_mx",
                      label    = "Choose Country",
                      choices  = cntry_code, multiple = FALSE,
                      selected = "SWE")
   )
 
-# timebase radio button
-timebase_radio <-
+# country dropdown menu (mx sex differences panel)
+cnty_dropdown_mx_sex_diff <-
+  column(4,
+         selectInput("country_mx_sex_diff",
+                     label    = "Choose Country",
+                     choices  = cntry_code, multiple = FALSE,
+                     selected = "SWE")
+  )
+
+# timebase radio button (plain mx panel)
+timebase_radio_mx <-
   column(2,
-         radioButtons(inputId = "timebase",
+         radioButtons(inputId = "timebase_mx",
                       label   = "Choose Timebase",
                       choices = list(Period  = "period",
                                      Cohort  = "cohort"),
                       selected = "period")
   )
 
-# sex radio button
-sex_radio <-
+# timebase radio button (mx sex differences panel)
+timebase_radio_mx_sex_diff <-
+  column(2,
+         radioButtons(inputId = "timebase_mx_sex_diff",
+                      label   = "Choose Timebase",
+                      choices = list(Period  = "period",
+                                     Cohort  = "cohort"),
+                      selected = "period")
+  )
+
+# sex radio button (plain mx panel)
+sex_radio_mx <-
   column(2,
          # sex checkbox
-         radioButtons(inputId = "sex",
+         radioButtons(inputId = "sex_mx",
                       label   = "Choose Sex",
                       choices = list(Total  = "fm",
                                      Female = "f",
@@ -48,8 +67,6 @@ about <-
            a(href = "http://www.mortality.org/", "Human Mortality Database"))
   )
 
-
-
 # Page Layout -------------------------------------------------------------
 
 shinyUI(
@@ -59,23 +76,37 @@ shinyUI(
              tabPanel("Mortality Rates",
 
                       fluidRow(
-                        column(12, h4(textOutput("plot_title"), align = "center"))
+                        column(12, h4(textOutput("plot_mx_title"),
+                                      align = "center"))
                       ),
                       fluidRow(
-                        column(12, plotOutput("plot"))
+                        column(12, plotOutput("plot_mx"))
                       ),
 
                       hr(),
 
-                      fluidRow(cnty_dropdown, timebase_radio, sex_radio, about)
+                      fluidRow(cnty_dropdown_mx,
+                               timebase_radio_mx,
+                               sex_radio_mx, about)
 
              ),
              # Sex Differences --------------------------------------------
              tabPanel("Mortality Sex Differences",
 
+                      fluidRow(
+                        column(12, h4(textOutput("plot_mx_sex_diff_title"),
+                                      align = "center"))
+                      ),
+
+                      fluidRow(
+                        column(12, plotOutput("plot_mx_sex_diff"))
+                      ),
+
                       hr(),
 
-                      fluidRow(cnty_dropdown, timebase_radio, about)
+                      fluidRow(cnty_dropdown_mx_sex_diff,
+                               timebase_radio_mx_sex_diff,
+                               about)
 
                       )
 
