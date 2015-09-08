@@ -141,7 +141,9 @@ PlotMx <- function (x) {
     scale_fill_brewer(expression(atop(atop("Deaths per",
                                            "10,000 Person Years"),
                                       m(x)%*%10000)),
-                      palette = "PuBuGn") +
+                      palette = "PuBuGn",
+                      # plot the full scale even if not all colours are used
+                      drop = FALSE) +
     guides(fill = guide_legend(reverse = TRUE)) +
     # custom xy scale labels
     scale_x_continuous("Year", limits = c(1668, 2012),
@@ -207,7 +209,9 @@ PlotMxSexDiff <- function (x) {
     scale_fill_manual(expression(atop(atop("Absolute Difference in",
                                             "Female and Male Mortality Rates"),
                                       m(x)[F]-m(x)[M])),
-                      values = rev(brewer.pal(10,"RdBu"))) +
+                      values = rev(brewer.pal(10, "RdBu")),
+                      # plot the full scale even if not all colours are used
+                      drop = FALSE) +
     guides(fill = guide_legend(reverse = TRUE)) +
     # custom xy scale labels
     scale_x_continuous("Year", limits = c(1668, 2012),
