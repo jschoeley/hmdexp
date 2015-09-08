@@ -19,7 +19,7 @@ shinyServer(function(input, output, session) {
   # filter based on user input
   dataset_mx <- reactive({
     filter(hmd_mx,
-           country   == input$country,
+           country   == hmdcbook[hmdcbook$Label == input$country, "Code"],
            sex       == input$sex,
            timebase  == input$timebase)
   })
@@ -27,7 +27,7 @@ shinyServer(function(input, output, session) {
   # filter based on user input
   dataset_mx_sex_diff <- reactive({
     filter(hmd_mx_sex_diff,
-           country   == input$country,
+           country   == hmdcbook[hmdcbook$Label == input$country, "Code"],
            timebase  == input$timebase)
   })
 

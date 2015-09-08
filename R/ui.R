@@ -4,7 +4,8 @@ source("./init.R")
 
 # list of countries in data
 load("./data/hmdcbook.Rdata")
-cntry_code  <- hmdcbook$Code
+#cntry_code  <- hmdcbook$Code
+cntry_lab  <- hmdcbook$Label
 
 # UI Blocks ---------------------------------------------------------------
 
@@ -13,7 +14,7 @@ cnty_dropdown <-
   column(3,
          selectInput("country",
                      label    = "Choose Country",
-                     choices  = cntry_code, multiple = FALSE,
+                     choices  = cntry_lab, multiple = FALSE,
                      selected = "SWE")
   )
 
