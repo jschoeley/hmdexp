@@ -43,7 +43,7 @@ sex_radio <-
 about <-
   column(4,
          p("Idea & Realization:", br(),
-           a(href = "https://github.com/jschoeley", "Jonas Schöley"),
+           a(href = "https://github.com/jschoeley", "Jonas Schöley"), "at",
            a(href = "http://www.sdu.dk/en/om_sdu/institutter_centre/maxo", br(),
              "Max-Planck Odense Center on the Biodemography of Aging")),
          p("Data Source:", br(),
