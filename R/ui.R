@@ -10,7 +10,7 @@ cntry_code  <- hmdcbook$Code
 
 # country dropdown menu
 cnty_dropdown <-
-  column(4,
+  column(3,
          selectInput("country",
                      label    = "Choose Country",
                      choices  = cntry_code, multiple = FALSE,
@@ -19,7 +19,7 @@ cnty_dropdown <-
 
 # timebase radio button
 timebase_radio <-
-  column(2,
+  column(1,
          radioButtons(inputId = "timebase",
                       label   = "Choose Timebase",
                       choices = list(Period  = "period",
@@ -29,7 +29,7 @@ timebase_radio <-
 
 # sex radio button
 sex_radio <-
-  column(2,
+  column(1,
          # sex checkbox
          radioButtons(inputId = "sex",
                       label   = "Choose Sex",
@@ -53,11 +53,10 @@ about <-
            researcher alike to explore the incredible rise of human life expectancy,
            the mysteries of the gender differences in survival or the global
            variation of mortality patterns. This project would not be possible
-           without free access to the HMD data.", br(),
-           "If you want to dig into the underlying data yourself just go to",
+           without free access to the HMD data."),
+          p("If you want to dig into the underlying data yourself just go to",
            a(href = "http://www.mortality.org/", "http://www.mortality.org/"),
-           "and register."
-         )
+           "and register.")
   )
 
 # Page Layout -------------------------------------------------------------
@@ -97,6 +96,8 @@ shinyUI(
              fluidRow(cnty_dropdown,
                       timebase_radio,
                       conditionalPanel(condition = "input.navbar == 'tab_mx'", sex_radio),
+                      conditionalPanel(condition = "input.navbar == 'tab_mx_sex_diff'", column(1)),
+                      column(3),
                       about)
 
   )
