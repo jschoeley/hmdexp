@@ -53,8 +53,8 @@ about <-
            researcher alike to explore the incredible rise of human life expectancy,
            the mysteries of the gender differences in survival or the global
            variation of mortality patterns. This project would not be possible
-           without free access to the HMD data. If you want to dig into the
-           underlying data yourself just go to",
+           without free access to the HMD data.", br(),
+           "If you want to dig into the underlying data yourself just go to",
            a(href = "http://www.mortality.org/", "http://www.mortality.org/"),
            "and register."
          )
