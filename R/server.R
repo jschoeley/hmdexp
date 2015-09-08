@@ -15,6 +15,11 @@ shinyServer(function(input, output, session) {
 
   # Reactive Dataset Generation -------------------------------------------
 
+  # project cohort-age data onto period-age grid
+  hmdmx[hmdmx$timebase == "cohort", "year"] <-
+    hmdmx[hmdmx$timebase == "cohort", "year"] +
+    hmdmx[hmdmx$timebase == "cohort", "age"]
+
   # filter to single sex, country and timeframe
   dataset_mx <- reactive({
     filter(hmdmx,
