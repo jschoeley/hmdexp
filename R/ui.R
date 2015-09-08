@@ -3,7 +3,7 @@
 source("./init.R")
 
 # list of countries in data
-load("../priv/data/hmdcbook.Rdata")
+load("./data/hmdcbook.Rdata")
 cntry_code  <- hmdcbook$Code
 
 # UI Blocks ---------------------------------------------------------------

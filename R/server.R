@@ -4,10 +4,11 @@ source("./init.R")         # load libraries
 source("./function_def.R") # load function definitions
 
 # load human mortality data
-load("../priv/data/hmdmx.Rdata")
+load("./data/hmd_mx.Rdata")
+load("./data/hmd_mx_sex_diff.Rdata")
 
 # load list of countries in data
-load("../priv/data/hmdcbook.Rdata")
+load("./data/hmdcbook.Rdata")
 
 # Shiny -------------------------------------------------------------------
 
@@ -15,27 +16,19 @@ shinyServer(function(input, output, session) {
 
   # Reactive Dataset Generation -------------------------------------------
 
-  # project cohort-age data onto period-age grid
-  hmdmx[hmdmx$timebase == "cohort", "year"] <-
-    hmdmx[hmdmx$timebase == "cohort", "year"] +
-    hmdmx[hmdmx$timebase == "cohort", "age"]
-
-  # filter to single sex, country and timeframe
+  # filter based on user input
   dataset_mx <- reactive({
-    filter(hmdmx,
+    filter(hmd_mx,
            country   == input$country_mx,
            sex       == input$sex_mx,
            timebase  == input$timebase_mx)
   })
 
-  # filter to males and females, country and timeframe
+  # filter based on user input
   dataset_mx_sex_diff <- reactive({
-    filter(hmdmx,
+    filter(hmd_mx_sex_diff,
            country   == input$country_mx_sex_diff,
-           sex       != "fm",
-           timebase  == input$timebase_mx_sex_diff) %>%
-      spread(key = sex, value = mx) %>%
-      mutate(mx_sex_diff = f - m)
+           timebase  == input$timebase_mx_sex_diff)
   })
 
   # Output: Mortality Rate Plot Title -------------------------------------
