@@ -19,16 +19,16 @@ shinyServer(function(input, output, session) {
   # filter based on user input
   dataset_mx <- reactive({
     filter(hmd_mx,
-           country   == input$country_mx,
-           sex       == input$sex_mx,
-           timebase  == input$timebase_mx)
+           country   == input$country,
+           sex       == input$sex,
+           timebase  == input$timebase)
   })
 
   # filter based on user input
   dataset_mx_sex_diff <- reactive({
     filter(hmd_mx_sex_diff,
-           country   == input$country_mx_sex_diff,
-           timebase  == input$timebase_mx_sex_diff)
+           country   == input$country,
+           timebase  == input$timebase)
   })
 
   # Output: Mortality Rate Plot Title -------------------------------------
