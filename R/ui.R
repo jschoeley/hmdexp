@@ -42,16 +42,28 @@ sex_radio <-
 # about
 about <-
   column(4,
-         p("Idea & Realization: ",
-           a(href = "https://github.com/jschoeley", "Jonas Schöley")),
-         p("Data Source: ",
-           a(href = "http://www.mortality.org/", "Human Mortality Database"))
+         p("Idea & Realization:", br(),
+           a(href = "https://github.com/jschoeley", "Jonas Schöley"),
+           a(href = "http://www.sdu.dk/en/om_sdu/institutter_centre/maxo", br(),
+             "Max-Planck Odense Center on the Biodemography of Aging")),
+         p("Data Source:", br(),
+           a(href = "http://www.mortality.org/", "Human Mortality Database")),
+         p("A great thanks goes towards the Human Mortality Database team.
+           Their magnificient work makes it possible for layman, student and
+           researcher alike to explore the incredible rise of human life expectancy,
+           the mysteries of the gender differences in survival or the global
+           variation of mortality patterns. This project would not be possible
+           without free access to the HMD data. If you want to dig into the
+           underlying data yourself just go to",
+           a(href = "http://www.mortality.org/", "http://www.mortality.org/"),
+           "and register."
+         )
   )
 
 # Page Layout -------------------------------------------------------------
 
 shinyUI(
-  navbarPage(id = "navbar", title = "Human Mortality Database Explorer",
+  navbarPage(id = "navbar", title = "Human Mortality Explorer",
              theme = "bootstrap.css",
 
              # Mortality Rates --------------------------------------------
