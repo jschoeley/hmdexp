@@ -11,11 +11,16 @@ DiscretizeMx <- function (x) {
               0.001, 0.005,
               0.01, 0.05,
               0.1, 0.5, 10) * scale
+  labels <- c("<1", " 1", " 5",
+             " 10", " 50",
+             " 100", " 500",
+             " 1,000", ">5,000")
 
   # generate timeline of discrete mx
   x %>%
     mutate(mx = cut(mx*scale,
                     breaks = breaks,
+                    labels = labels,
                     include.lowest = TRUE)) -> result
 
   return(result)
@@ -43,6 +48,21 @@ DiscretizeMxSexDiff <- function (x) {
   return(result)
 
 }
+
+# Plot Theme --------------------------------------------------------------
+
+theme_hmdexp <-
+  theme(plot.margin = unit(c(0, 0, 0, 0), units = "cm"),
+        panel.background  = element_blank(),
+        plot.background   = element_blank(),
+        panel.grid.major  = element_line(colour = "grey20"),
+        panel.grid.minor  = element_line(colour = "grey20"),
+        legend.background = element_blank(),
+        axis.title        = element_text(colour = "grey50"),
+        axis.ticks        = element_blank(),
+        legend.key        = element_blank(),
+        legend.text       = element_text(colour = "grey50"),
+        legend.title      = element_text(colour = "grey50"))
 
 # Plot Lexis Grid Breaks --------------------------------------------------
 
@@ -107,7 +127,10 @@ PlotMx <- function (x) {
     # heatmap
     geom_tile(aes(fill = mx)) +
     # discrete colour scale
-    scale_fill_brewer(expression(m(x)%*%10000), palette = "PuBuGn") +
+    scale_fill_brewer(expression(atop(atop("Deaths per",
+                                           "10,000 Person Years"),
+                                      m(x)%*%10000)),
+                      palette = "PuBuGn") +
     guides(fill = guide_legend(reverse = TRUE)) +
     # custom xy scale labels
     scale_x_continuous("Year", limits = c(1670, 2015),
@@ -118,15 +141,7 @@ PlotMx <- function (x) {
                        expand = c(0, 0.5)) +
     # equidistant xy-coordinates
     coord_equal() +
-    theme(plot.margin = unit(c(0, 0, 0, 0), units = "cm"),
-          panel.background  = element_blank(),
-          plot.background   = element_blank(),
-          legend.background = element_blank(),
-          axis.title        = element_text(colour = "#E5E5E5"),
-          axis.ticks        = element_blank(),
-          legend.key        = element_blank(),
-          legend.text       = element_text(colour = "white"),
-          legend.title      = element_text(colour = "white"))
+    theme_hmdexp
 
   return(plot_mx)
 
@@ -172,7 +187,9 @@ PlotMxSexDiff <- function (x) {
     # heatmap
     geom_tile(aes(fill = mx_sex_diff)) +
     # divergent, cntn. colour scale
-    scale_fill_manual(expression(m(x)[F]-m(x)[M]),
+    scale_fill_manual(expression(atop(atop("Absolute Difference in",
+                                            "Female and Male Mortality Rates"),
+                                      m(x)[F]-m(x)[M])),
                       values = rev(brewer.pal(10,"RdBu"))) +
     guides(fill = guide_legend(reverse = TRUE)) +
     # custom xy scale labels
@@ -184,15 +201,7 @@ PlotMxSexDiff <- function (x) {
                        expand = c(0, 0.5)) +
     # equidistant xy-coordinates
     coord_equal() +
-    theme(plot.margin = unit(c(0, 0, 0, 0), units = "cm"),
-          panel.background  = element_blank(),
-          plot.background   = element_blank(),
-          legend.background = element_blank(),
-          axis.title        = element_text(colour = "#E5E5E5"),
-          axis.ticks        = element_blank(),
-          legend.key        = element_blank(),
-          legend.text       = element_text(colour = "white"),
-          legend.title      = element_text(colour = "white"))
+    theme_hmdexp
 
   return(plot_mx_sex_diff)
 
