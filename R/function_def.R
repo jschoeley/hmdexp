@@ -55,8 +55,8 @@ theme_hmdexp <-
   theme(plot.margin = unit(c(0, 0, 0, 0), units = "cm"),
         panel.background  = element_blank(),
         plot.background   = element_blank(),
-        panel.grid.major  = element_line(colour = "grey20"),
-        panel.grid.minor  = element_line(colour = "grey20"),
+        panel.grid.major  = element_line(colour = "grey50", size = 0.25),
+        panel.grid.minor  = element_blank(),
         legend.background = element_blank(),
         axis.title        = element_text(colour = "grey50"),
         axis.ticks        = element_blank(),
@@ -135,6 +135,9 @@ PlotMx <- function (x) {
   # plot
   plot_mx <-
     ggplot(x, aes(x = year, y = age)) +
+    # cohort lines
+    geom_abline(intercept = seq(-2000, 2000, 10),
+                colour = "grey50", size = 0.25, lty = 2) +
     # heatmap
     geom_tile(aes(fill = mx)) +
     # discrete colour scale
@@ -203,6 +206,9 @@ PlotMxSexDiff <- function (x) {
   # plot
   plot_mx_sex_diff <-
     ggplot(x, aes(x = year, y = age)) +
+    # cohort lines
+    geom_abline(intercept = seq(-2000, 2000, 10),
+                colour = "grey50", size = 0.25, lty = 2) +
     # heatmap
     geom_tile(aes(fill = mx_sex_diff)) +
     # divergent, cntn. colour scale
