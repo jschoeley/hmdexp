@@ -27,13 +27,13 @@ DiscretizeMx <- function (x) {
 
 }
 
-# discretize a continuous mx vector
+# discretize a continuous mx sex diff vector
 DiscretizeMxSexDiff <- function (x) {
 
   # mortality rate sex diff breaks for discrete colour scale
   breaks <- c(-100 , -1, -0.01, -0.001, -0.0001,
               0, 0.0001, 0.001, 0.01, 1, 100)
-  labels <- c("< -1 Excess Male Mortality",
+  labels <- c("< -1 Excess Mortality",
               "-1", "-0.01", "-0.001", "-0.0001",
               "+0.0001", "+0.001", "+0.01", "+1",
               "> 1 Excess Female Mortality")
@@ -44,6 +44,28 @@ DiscretizeMxSexDiff <- function (x) {
                              breaks = breaks,
                              labels = labels,
                              include.lowest = TRUE)) -> result
+
+  return(result)
+
+}
+
+# discretize a continuous mx country diff vector
+DiscretizeMxCntryDiff <- function (x) {
+
+  # mortality rate sex diff breaks for discrete colour scale
+  breaks <- c(-100 , -1, -0.01, -0.001, -0.0001,
+              0, 0.0001, 0.001, 0.01, 1, 100)
+  labels <- c("< -1 Excess Mortality Country 2",
+              "-1", "-0.01", "-0.001", "-0.0001",
+              "+0.0001", "+0.001", "+0.01", "+1",
+              "> 1 Excess Mortality Country 1")
+
+  # generate timeline of discrete mx
+  x %>%
+    mutate(mx_country_diff = cut(mx_country_diff,
+                                 breaks = breaks,
+                                 labels = labels,
+                                 include.lowest = TRUE)) -> result
 
   return(result)
 
@@ -90,35 +112,30 @@ IsDataFrameEmpty <- function(x) {
 }
 
 # Generate a plot mx title based on the data subset displayed
-GenerateMxPlotTitle <- function (x, hmd_country_codes) {
+GenerateMxPlotTitle <- function (x, hmd_country_codes, input) {
 
   if (IsDataFrameEmpty(x) == TRUE){
 
-    plot_title <- "No Data Availabe"
+    plot_title <- "No Data Available"
 
   } else {
 
     # timebase labels
-    if (x$timebase[1] == "period") timebase_title <- "Period"
-    if (x$timebase[1] == "cohort") timebase_title <- "Cohort"
-
-    # country labels
-    country_title <- hmd_country_codes[hmd_country_codes$Code == x$country[1], 2]
+    if (input$timebase == "period") timebase_title <- "Period"
+    if (input$timebase == "cohort") timebase_title <- "Cohort"
 
     # sex labels
-    if (x$sex[1] == "f")  sex_title  <- "Female"
-    if (x$sex[1] == "m")  sex_title  <- "Male"
-    if (x$sex[1] == "fm") sex_title  <- "Total"
+    if (input$sex == "f")  sex_title  <- "Female"
+    if (input$sex == "m")  sex_title  <- "Male"
+    if (input$sex == "fm") sex_title  <- "Total"
 
     # year labels
-    # base year range on available data
-    x_naomit <- na.omit(x)
-    year_min_title <- min(x_naomit$year)
-    year_max_title <- max(x_naomit$year)
+    year_min_title <- min(x$year)
+    year_max_title <- max(x$year)
     year_title     <- paste(year_min_title, "to", year_max_title)
 
     plot_title <- paste0("Age-specific ", timebase_title, " Mortality Rates of",
-                         country_title, ", ",
+                         input$country, ", ",
                          sex_title, " Population", ", ",
                          year_title,
                          "\n")
@@ -166,33 +183,28 @@ PlotMx <- function (x) {
 # Plot Mortality Sex Differences ------------------------------------------
 
 # Generate a plot mx sex differences title based on the data subset displayed
-GenerateMxSexDiffPlotTitle <- function (x, hmd_country_codes) {
+GenerateMxSexDiffPlotTitle <- function (x, hmd_country_codes, input) {
 
   if (IsDataFrameEmpty(x) == TRUE){
 
-    plot_title <- "No Data Availabe"
+    plot_title <- "No Data Available"
 
   } else {
 
-  # title: timebase labels
-  if (x$timebase[1] == "period") timebase_title <- "Period"
-  if (x$timebase[1] == "cohort") timebase_title <- "Cohort"
+    # timebase labels
+    if (input$timebase == "period") timebase_title <- "Period"
+    if (input$timebase == "cohort") timebase_title <- "Cohort"
 
-  # country labels
-  country_title <- hmd_country_codes[hmd_country_codes$Code == x$country[1], 2]
+    # year labels
+    year_min_title <- min(x$year)
+    year_max_title <- max(x$year)
+    year_title     <- paste(year_min_title, "to", year_max_title)
 
-  # title: year labels
-  # base year range on available data
-  x_naomit <- na.omit(x)
-  year_min_title <- min(x_naomit$year)
-  year_max_title <- max(x_naomit$year)
-  year_title     <- paste(year_min_title, "to", year_max_title)
-
-  plot_title <- paste0("Age-specific ", timebase_title,
-                       " Mortality Rate Sex Proportions of",
-                       country_title, ", ",
-                       year_title,
-                       "\n")
+    plot_title <- paste0("Age-specific ", timebase_title,
+                         " Mortality Rate Sex Differences of",
+                         input$country, ", ",
+                         year_title,
+                         "\n")
 
   }
 
@@ -231,5 +243,80 @@ PlotMxSexDiff <- function (x) {
     theme_hmdexp
 
   return(plot_mx_sex_diff)
+
+}
+
+# Plot Mortality Country Differences --------------------------------------
+
+# Generate a plot mx country differences title based on the data subset displayed
+GenerateMxCntryDiffPlotTitle <- function (x, hmd_country_codes, input) {
+
+  if (IsDataFrameEmpty(x) == TRUE){
+
+    plot_title <- "No Data Available"
+
+  } else {
+
+    # timebase labels
+    if (input$timebase == "period") timebase_title <- "Period"
+    if (input$timebase == "cohort") timebase_title <- "Cohort"
+
+    # country labels
+    country_1_title <- input$country_1
+    country_2_title <- input$country_2
+
+    # sex labels
+    if (input$sex == "f")  sex_title  <- "Female"
+    if (input$sex == "m")  sex_title  <- "Male"
+    if (input$sex == "fm") sex_title  <- "Total"
+
+    # year range labels
+    year_min_title <- min(x$year)
+    year_max_title <- max(x$year)
+    year_title     <- paste(year_min_title, "to", year_max_title)
+
+    plot_title <- paste0("Age-specific ", timebase_title,
+                         " Mortality Rate Country Differences of",
+                         country_1_title, " and ", country_2_title, ", ",
+                         year_title, ", ", sex_title,
+                         "\n")
+
+  }
+
+  return(plot_title)
+
+}
+
+# plot mx country differences
+PlotMxCntryDiff <- function (x) {
+
+  # plot
+  plot_mx_cntry_diff <-
+    ggplot(x, aes(x = year, y = age)) +
+    # cohort lines
+    geom_abline(intercept = seq(-2000, 2000, 10),
+                colour = "grey50", size = 0.25, lty = 2) +
+    # heatmap
+    geom_tile(aes(fill = mx_country_diff)) +
+    # divergent, cntn. colour scale
+    scale_fill_manual(expression(atop(atop("Absolute Difference in",
+                                           "Country 1 and Country 2 Mortality Rates"),
+                                      m(x)[1]-m(x)[2])),
+                      values = rev(brewer.pal(10, "RdBu")),
+                      # plot the full scale even if not all colours are used
+                      drop = FALSE) +
+    guides(fill = guide_legend(reverse = TRUE)) +
+    # custom xy scale labels
+    scale_x_continuous("Year", limits = c(1668, 2012),
+                       breaks = xbreak, labels = xlabel,
+                       expand = c(0, 0.5)) +
+    scale_y_continuous("Age", limits = c(0, 112),
+                       breaks = ybreak,
+                       expand = c(0, 0.5)) +
+    # equidistant xy-coordinates
+    coord_equal() +
+    theme_hmdexp
+
+  return(plot_mx_cntry_diff)
 
 }

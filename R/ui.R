@@ -11,7 +11,7 @@ cntry_lab  <- hmdcbook$Label
 
 # country dropdown menu
 cntry_dropdown <-
-  column(3,
+  column(4,
          selectInput("country",
                      label    = "Choose Country",
                      choices  = cntry_lab, multiple = FALSE,
@@ -19,14 +19,14 @@ cntry_dropdown <-
   )
 
 # country comparison dropdown menu
-cntry1_comp_dropdown <-
+cntry1_diff_dropdown <-
   column(2,
          selectInput("country_1",
                      label    = "Choose Country 1",
                      choices  = cntry_lab, multiple = FALSE,
                      selected = " Sweden")
   )
-cntry2_comp_dropdown <-
+cntry2_diff_dropdown <-
   column(2,
          selectInput("country_2",
                      label    = "Choose Country 2",
@@ -94,8 +94,9 @@ shinyUI(
                       )
 
              ),
+
              # Sex Differences --------------------------------------------
-             tabPanel(value = "tab_mx_sex_diff", title = "Mortality Sex Differences",
+             tabPanel(value = "tab_mx_sex_diff", title = "Sex Differences",
 
                       fluidRow(
                         column(12, h4(textOutput("plot_mx_sex_diff_title"),
@@ -108,14 +109,35 @@ shinyUI(
 
              ),
 
+             # Country Differences ----------------------------------------
+             tabPanel(value = "tab_mx_cntry_diff", title = "Country Comparison",
+
+                      fluidRow(
+                        column(12, h4(textOutput("plot_mx_country_diff_title"),
+                                      align = "center"))
+                      ),
+
+                      fluidRow(
+                        column(12, plotOutput("plot_mx_cntry_diff"))
+                      )
+
+             ),
+
              hr(),
 
-             fluidRow(cntry_dropdown,
-                      timebase_radio,
-                      conditionalPanel(condition = "input.navbar == 'tab_mx'", sex_radio),
-                      conditionalPanel(condition = "input.navbar == 'tab_mx_sex_diff'", column(1)),
-                      column(3),
-                      about)
+             fluidRow(
+               conditionalPanel("(input.navbar == 'tab_mx' || input.navbar == 'tab_mx_sex_diff')",
+                                cntry_dropdown),
+               conditionalPanel("(input.navbar == 'tab_mx_cntry_diff')",
+                                cntry1_diff_dropdown,
+                                cntry2_diff_dropdown),
+               timebase_radio,
+               conditionalPanel("(input.navbar == 'tab_mx' || input.navbar == 'tab_mx_cntry_diff')",
+                                sex_radio),
+               conditionalPanel("(input.navbar == 'tab_mx_sex_diff')",
+                                column(1)),
+               column(2),
+               about)
 
   )
 )
