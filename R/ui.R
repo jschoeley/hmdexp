@@ -65,9 +65,9 @@ about <-
              "Max-Planck Odense Center on the Biodemography of Aging")),
          p("Data Source:", br(),
            a(href = "http://www.mortality.org/", "Human Mortality Database")),
-         p("A great thanks goes towards the Human Mortality Database team.
-           Their magnificient work makes it possible for layman, student and
-           researcher alike to explore the incredible rise of human life expectancy,
+         p("A big thanks goes towards the Human Mortality Database team.
+           Their magnificient work makes it possible for laymans, students and
+           researchers alike to explore the incredible rise of human life expectancy,
            the mysteries of the gender differences in survival or the global
            variation of mortality patterns. This project would not be possible
            without free access to the HMD data."),
