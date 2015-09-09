@@ -134,7 +134,7 @@ GenerateMxPlotTitle <- function (x, hmd_country_codes, input) {
     year_max_title <- max(x$year)
     year_title     <- paste(year_min_title, "to", year_max_title)
 
-    plot_title <- paste0("Age-specific ", timebase_title, " Mortality Rates of",
+    plot_title <- paste0("Age-specific ", timebase_title, " Mortality Rates of ",
                          input$country, ", ",
                          sex_title, " Population", ", ",
                          year_title,
@@ -201,7 +201,7 @@ GenerateMxSexDiffPlotTitle <- function (x, hmd_country_codes, input) {
     year_title     <- paste(year_min_title, "to", year_max_title)
 
     plot_title <- paste0("Age-specific ", timebase_title,
-                         " Mortality Rate Sex Differences of",
+                         " Mortality Rate Sex Differences of ",
                          input$country, ", ",
                          year_title,
                          "\n")
@@ -225,7 +225,7 @@ PlotMxSexDiff <- function (x) {
     geom_tile(aes(fill = mx_sex_diff)) +
     # divergent, cntn. colour scale
     scale_fill_manual(expression(atop(atop("Absolute Difference in",
-                                            "Female and Male Mortality Rates"),
+                                           "Female and Male Mortality Rates"),
                                       m(x)[F]-m(x)[M])),
                       values = rev(brewer.pal(10, "RdBu")),
                       # plot the full scale even if not all colours are used
@@ -276,7 +276,7 @@ GenerateMxCntryDiffPlotTitle <- function (x, hmd_country_codes, input) {
     year_title     <- paste(year_min_title, "to", year_max_title)
 
     plot_title <- paste0("Age-specific ", timebase_title,
-                         " Mortality Rate Country Differences of",
+                         " Mortality Rate Country Differences of ",
                          country_1_title, " and ", country_2_title, ", ",
                          year_title, ", ", sex_title,
                          "\n")

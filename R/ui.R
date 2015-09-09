@@ -15,7 +15,7 @@ cntry_dropdown <-
          selectInput("country",
                      label    = "Choose Country",
                      choices  = cntry_lab, multiple = FALSE,
-                     selected = " Sweden")
+                     selected = "Sweden")
   )
 
 # country comparison dropdown menu
@@ -24,14 +24,14 @@ cntry1_diff_dropdown <-
          selectInput("country_1",
                      label    = "Choose Country 1",
                      choices  = cntry_lab, multiple = FALSE,
-                     selected = " Sweden")
+                     selected = "Sweden")
   )
 cntry2_diff_dropdown <-
   column(2,
          selectInput("country_2",
                      label    = "Choose Country 2",
                      choices  = cntry_lab, multiple = FALSE,
-                     selected = " Denmark")
+                     selected = "Denmark")
   )
 
 # timebase radio button
