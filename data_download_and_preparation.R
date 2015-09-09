@@ -27,7 +27,7 @@ write_csv(hmdDxNx, path = "./priv/misc/hmdDxNx.csv")
 # Transform ---------------------------------------------------------------
 
 # read downloaded data
-read.csv("./priv/misc/hmdDxNx.csv",
+read.csv("./priv/hmdDxNx.csv",
          stringsAsFactors = FALSE,
          na.strings = "NA") -> hmd
 

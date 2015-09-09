@@ -10,12 +10,28 @@ cntry_lab  <- hmdcbook$Label
 # UI Blocks ---------------------------------------------------------------
 
 # country dropdown menu
-cnty_dropdown <-
+cntry_dropdown <-
   column(3,
          selectInput("country",
                      label    = "Choose Country",
                      choices  = cntry_lab, multiple = FALSE,
-                     selected = "SWE")
+                     selected = " Sweden")
+  )
+
+# country comparison dropdown menu
+cntry1_comp_dropdown <-
+  column(2,
+         selectInput("country_1",
+                     label    = "Choose Country 1",
+                     choices  = cntry_lab, multiple = FALSE,
+                     selected = " Sweden")
+  )
+cntry2_comp_dropdown <-
+  column(2,
+         selectInput("country_2",
+                     label    = "Choose Country 2",
+                     choices  = cntry_lab, multiple = FALSE,
+                     selected = " Denmark")
   )
 
 # timebase radio button
@@ -94,7 +110,7 @@ shinyUI(
 
              hr(),
 
-             fluidRow(cnty_dropdown,
+             fluidRow(cntry_dropdown,
                       timebase_radio,
                       conditionalPanel(condition = "input.navbar == 'tab_mx'", sex_radio),
                       conditionalPanel(condition = "input.navbar == 'tab_mx_sex_diff'", column(1)),
