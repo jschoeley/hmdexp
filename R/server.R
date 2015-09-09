@@ -111,7 +111,8 @@ shinyServer(function(input, output, session) {
 
   output$plot_mx_cntry_diff <- renderPlot({
 
-    years_of_mx_cntry_diff <- DiscretizeMxCntryDiff(dataset_mx_cntry_diff())
+    years_of_mx_cntry_diff <- DiscretizeMxCntryDiff(dataset_mx_cntry_diff(),
+                                                    input = input)
 
     plot_mx_cntry_diff <- PlotMxCntryDiff(years_of_mx_cntry_diff)
 

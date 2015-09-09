@@ -50,15 +50,15 @@ DiscretizeMxSexDiff <- function (x) {
 }
 
 # discretize a continuous mx country diff vector
-DiscretizeMxCntryDiff <- function (x) {
+DiscretizeMxCntryDiff <- function (x, input) {
 
   # mortality rate sex diff breaks for discrete colour scale
   breaks <- c(-100 , -1, -0.01, -0.001, -0.0001,
               0, 0.0001, 0.001, 0.01, 1, 100)
-  labels <- c("< -1 Excess Mortality Country 2",
+  labels <- c(paste("< -1 Excess Mortality", input$country_2),
               "-1", "-0.01", "-0.001", "-0.0001",
               "+0.0001", "+0.001", "+0.01", "+1",
-              "> 1 Excess Mortality Country 1")
+              paste("> 1 Excess Mortality", input$country_1))
 
   # generate timeline of discrete mx
   x %>%
