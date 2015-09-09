@@ -33,7 +33,7 @@ DiscretizeMxSexDiff <- function (x) {
   # mortality rate sex diff breaks for discrete colour scale
   breaks <- c(-100 , -1, -0.01, -0.001, -0.0001,
               0, 0.0001, 0.001, 0.01, 1, 100)
-  labels <- c("< -1 Excess Mortality",
+  labels <- c("< -1 Excess Male Mortality",
               "-1", "-0.01", "-0.001", "-0.0001",
               "+0.0001", "+0.001", "+0.01", "+1",
               "> 1 Excess Female Mortality")
