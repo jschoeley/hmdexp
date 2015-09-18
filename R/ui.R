@@ -125,6 +125,7 @@ shinyUI(
 
              hr(),
 
+             # Settings Panel ---------------------------------------------
              fluidRow(
                conditionalPanel("(input.navbar == 'tab_mx' || input.navbar == 'tab_mx_sex_diff')",
                                 cntry_dropdown),
