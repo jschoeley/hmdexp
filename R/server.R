@@ -1,7 +1,11 @@
 # Input -------------------------------------------------------------------
 
 source("./init.R")         # load libraries
-source("./function_def.R") # load function definitions
+# load function definitions
+source("./fnct-misc.R")
+source("./fnct-discretizer.R")
+source("./fnct-plot.R")
+source("./fnct-plot_title.R")
 
 # load human mortality data
 load("./data/hmd_mx.Rdata")
@@ -50,38 +54,32 @@ shinyServer(function(input, output, session) {
 
   # Output: Mortality Rate Plot Title -------------------------------------
 
-  output$plot_mx_title <- renderText({
-
-    # generate plot title based on subsetted dataset
-    GenerateMxPlotTitle(x = dataset_mx(),
-                        hmd_country_codes = hmdcbook,
-                        input = input)
-
+  output$plot_mx_main_title <- renderText({
+    GenerateMxPlotMainTitle(dataset_mx(), input)
+  })
+  output$plot_mx_sub_title <- renderText({
+    GenerateMxPlotSubTitle(dataset_mx(), input)
   })
 
   # Output: Mortality Rate Sex Diff Plot Title ----------------------------
 
-  output$plot_mx_sex_diff_title <- renderText({
-
-    # generate plot title based on subsetted dataset
-    GenerateMxSexDiffPlotTitle(x = dataset_mx_sex_diff(),
-                               hmd_country_codes = hmdcbook,
-                               input = input)
-
+  output$plot_mx_sex_diff_main_title <- renderText({
+    GenerateMxSexDiffPlotMainTitle(dataset_mx_sex_diff(), input)
+  })
+  output$plot_mx_sex_diff_sub_title <- renderText({
+    GenerateMxSexDiffPlotSubTitle(dataset_mx_sex_diff(), input)
   })
 
   # Output: Mortality Rate Country Diff Plot Title -------------------------
 
-  output$plot_mx_country_diff_title <- renderText({
-
-    # generate plot title based on subsetted dataset
-    GenerateMxCntryDiffPlotTitle(x = dataset_mx_cntry_diff(),
-                                 hmd_country_codes = hmdcbook,
-                                 input = input)
-
+  output$plot_mx_country_diff_main_title <- renderText({
+    GenerateMxCntryDiffPlotMainTitle(dataset_mx_cntry_diff(), input)
+  })
+  output$plot_mx_country_diff_sub_title <- renderText({
+    GenerateMxCntryDiffPlotSubTitle(dataset_mx_cntry_diff(), input)
   })
 
-  # Output: Heatmap Plot ---------------------------------------------------
+  # Output: Mortality Rate Plot -------------------------------------------
 
   output$plot_mx <- renderPlot({
 

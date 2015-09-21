@@ -86,9 +86,14 @@ shinyUI(
              tabPanel(value = "tab_mx", title = "Mortality Rates",
 
                       fluidRow(
-                        column(12, h4(textOutput("plot_mx_title"),
+                        column(12, h5(textOutput("plot_mx_main_title"),
                                       align = "center"))
                       ),
+                      fluidRow(
+                        column(12, h6(textOutput("plot_mx_sub_title"),
+                                      align = "center"))
+                      ),
+
                       fluidRow(
                         column(12, plotOutput("plot_mx"))
                       )
@@ -99,7 +104,11 @@ shinyUI(
              tabPanel(value = "tab_mx_sex_diff", title = "Sex Differences",
 
                       fluidRow(
-                        column(12, h4(textOutput("plot_mx_sex_diff_title"),
+                        column(12, h5(textOutput("plot_mx_sex_diff_main_title"),
+                                      align = "center"))
+                      ),
+                      fluidRow(
+                        column(12, h6(textOutput("plot_mx_sex_diff_sub_title"),
                                       align = "center"))
                       ),
 
@@ -113,7 +122,11 @@ shinyUI(
              tabPanel(value = "tab_mx_cntry_diff", title = "Country Comparison",
 
                       fluidRow(
-                        column(12, h4(textOutput("plot_mx_country_diff_title"),
+                        column(12, h5(textOutput("plot_mx_country_diff_main_title"),
+                                      align = "center"))
+                      ),
+                      fluidRow(
+                        column(12, h6(textOutput("plot_mx_country_diff_sub_title"),
                                       align = "center"))
                       ),
 
