@@ -74,7 +74,7 @@ DiscretizeMxCntryDiff <- function (x, input) {
 # Plot Theme --------------------------------------------------------------
 
 theme_hmdexp <-
-  theme(plot.margin = unit(c(0, 0, 0, 0), units = "cm"),
+  theme(plot.margin       = unit(c(0, 0, 0, 0), units = "cm"),
         panel.background  = element_blank(),
         plot.background   = element_blank(),
         panel.grid.major  = element_line(colour = "grey50", size = 0.25),
