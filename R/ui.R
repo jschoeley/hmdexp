@@ -81,14 +81,14 @@ about <-
 shinyUI(
   navbarPage(id = "navbar", title = "Human Mortality Explorer",
              theme = "bootstrap.css",
-             header = tags$head(tags$style(".plotRow{height:32vw !important;}")),
+             header = tags$head(tags$style(".plotRow{height:30vw !important;}")),
 
              # Mortality Rates --------------------------------------------
              tabPanel(value = "tab_mx", title = "Mortality Rates",
 
-                      fluidRow(h5(textOutput("plot_mx_main_title"),
+                      fluidRow(h4(textOutput("plot_mx_main_title"),
                                   align = "center")),
-                      fluidRow(h6(textOutput("plot_mx_sub_title"),
+                      fluidRow(h5(textOutput("plot_mx_sub_title"),
                                       align = "center")),
 
                       fluidRow(class = "plotRow",
@@ -99,10 +99,10 @@ shinyUI(
              # Sex Differences --------------------------------------------
              tabPanel(value = "tab_mx_sex_diff", title = "Sex Differences",
 
-                      fluidRow(h5(textOutput("plot_mx_sex_diff_main_title"),
+                      fluidRow(h4(textOutput("plot_mx_sex_diff_main_title"),
                                   align = "center")),
 
-                      fluidRow(h6(textOutput("plot_mx_sex_diff_sub_title"),
+                      fluidRow(h5(textOutput("plot_mx_sex_diff_sub_title"),
                                       align = "center")),
 
                       fluidRow(class = "plotRow",
@@ -113,10 +113,10 @@ shinyUI(
              # Country Differences ----------------------------------------
              tabPanel(value = "tab_mx_cntry_diff", title = "Country Comparison",
 
-                      fluidRow(h5(textOutput("plot_mx_country_diff_main_title"),
+                      fluidRow(h4(textOutput("plot_mx_country_diff_main_title"),
                                   align = "center")),
 
-                      fluidRow(h6(textOutput("plot_mx_country_diff_sub_title"),
+                      fluidRow(h5(textOutput("plot_mx_country_diff_sub_title"),
                                   align = "center")),
 
                       fluidRow(class = "plotRow",

@@ -117,10 +117,10 @@ PlotMxCntryDiff <- function (x) {
     # heatmap
     geom_tile(aes(fill = mx_country_diff)) +
     # divergent, cntn. colour scale
-    scale_fill_manual(expression(atop(atop("Absolute Difference in",
+    scale_fill_brewer(expression(atop(atop("Absolute Difference in",
                                            "Country 1 and Country 2 Mortality Rates"),
                                       m(x)[1]-m(x)[2])),
-                      values = rev(brewer.pal(10, "RdBu")),
+                      palette = "BrBG",
                       # plot the full scale even if not all colours are used
                       drop = FALSE) +
     guides(fill = guide_legend(reverse = TRUE)) +
