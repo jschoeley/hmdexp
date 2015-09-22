@@ -58,7 +58,7 @@ sex_radio <-
 
 # about
 about <-
-  column(4,
+  column(6,
          p("Idea & Realization:", br(),
            a(href = "https://github.com/jschoeley", "Jonas Schöley"), "at",
            a(href = "http://www.sdu.dk/en/om_sdu/institutter_centre/maxo", br(),
@@ -81,58 +81,46 @@ about <-
 shinyUI(
   navbarPage(id = "navbar", title = "Human Mortality Explorer",
              theme = "bootstrap.css",
+             header = tags$head(tags$style(".plotRow{height:32vw !important;}")),
 
              # Mortality Rates --------------------------------------------
              tabPanel(value = "tab_mx", title = "Mortality Rates",
 
-                      fluidRow(
-                        column(12, h5(textOutput("plot_mx_main_title"),
-                                      align = "center"))
-                      ),
-                      fluidRow(
-                        column(12, h6(textOutput("plot_mx_sub_title"),
-                                      align = "center"))
-                      ),
+                      fluidRow(h5(textOutput("plot_mx_main_title"),
+                                  align = "center")),
+                      fluidRow(h6(textOutput("plot_mx_sub_title"),
+                                      align = "center")),
 
-                      fluidRow(
-                        column(12, plotOutput("plot_mx"))
-                      )
+                      fluidRow(class = "plotRow",
+                               plotOutput("plot_mx", height = "100%"))
 
              ),
 
              # Sex Differences --------------------------------------------
              tabPanel(value = "tab_mx_sex_diff", title = "Sex Differences",
 
-                      fluidRow(
-                        column(12, h5(textOutput("plot_mx_sex_diff_main_title"),
-                                      align = "center"))
-                      ),
-                      fluidRow(
-                        column(12, h6(textOutput("plot_mx_sex_diff_sub_title"),
-                                      align = "center"))
-                      ),
+                      fluidRow(h5(textOutput("plot_mx_sex_diff_main_title"),
+                                  align = "center")),
 
-                      fluidRow(
-                        column(12, plotOutput("plot_mx_sex_diff"))
-                      )
+                      fluidRow(h6(textOutput("plot_mx_sex_diff_sub_title"),
+                                      align = "center")),
+
+                      fluidRow(class = "plotRow",
+                               plotOutput("plot_mx_sex_diff", height = "100%"))
 
              ),
 
              # Country Differences ----------------------------------------
              tabPanel(value = "tab_mx_cntry_diff", title = "Country Comparison",
 
-                      fluidRow(
-                        column(12, h5(textOutput("plot_mx_country_diff_main_title"),
-                                      align = "center"))
-                      ),
-                      fluidRow(
-                        column(12, h6(textOutput("plot_mx_country_diff_sub_title"),
-                                      align = "center"))
-                      ),
+                      fluidRow(h5(textOutput("plot_mx_country_diff_main_title"),
+                                  align = "center")),
 
-                      fluidRow(
-                        column(12, plotOutput("plot_mx_cntry_diff"))
-                      )
+                      fluidRow(h6(textOutput("plot_mx_country_diff_sub_title"),
+                                  align = "center")),
+
+                      fluidRow(class = "plotRow",
+                               plotOutput("plot_mx_cntry_diff", height = "100%"))
 
              ),
 
@@ -150,7 +138,6 @@ shinyUI(
                                 sex_radio),
                conditionalPanel("(input.navbar == 'tab_mx_sex_diff')",
                                 column(1)),
-               column(2),
                about)
 
   )
