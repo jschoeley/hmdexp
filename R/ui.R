@@ -13,25 +13,28 @@ cntry_lab  <- hmdcbook$Label
 cntry_dropdown <-
   column(4,
          selectInput("country",
-                     label    = "Choose Country",
-                     choices  = cntry_lab, multiple = FALSE,
-                     selected = "Sweden")
+                     label     = "Choose Country",
+                     choices   = cntry_lab, multiple = FALSE,
+                     selected  = "Sweden",
+                     selectize = FALSE)
   )
 
 # country comparison dropdown menu
 cntry1_diff_dropdown <-
   column(2,
          selectInput("country_1",
-                     label    = "Choose Country 1",
-                     choices  = cntry_lab, multiple = FALSE,
-                     selected = "Sweden")
+                     label     = "Choose Country 1",
+                     choices   = cntry_lab, multiple = FALSE,
+                     selected  = "Sweden",
+                     selectize = FALSE)
   )
 cntry2_diff_dropdown <-
   column(2,
          selectInput("country_2",
-                     label    = "Choose Country 2",
-                     choices  = cntry_lab, multiple = FALSE,
-                     selected = "Denmark")
+                     label     = "Choose Country 2",
+                     choices   = cntry_lab, multiple = FALSE,
+                     selected  = "Denmark",
+                     selectize = FALSE)
   )
 
 # timebase radio button
@@ -81,7 +84,7 @@ about <-
 shinyUI(
   navbarPage(id = "navbar", title = "Human Mortality Explorer",
              theme = "bootstrap.css",
-             header = tags$head(tags$style(".plotRow{height:30vw !important;}")),
+             header = tags$head(tags$link(rel = "stylesheet", type = "text/css", href = "style.css")),
 
              # Mortality Rates --------------------------------------------
              tabPanel(value = "tab_mx", title = "Mortality Rates",
