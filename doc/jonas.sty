@@ -1,0 +1,198 @@
+%%%% Init %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% latex-dependency
+\NeedsTeXFormat{LaTeX2e}
+% package metadata
+\ProvidesPackage{jonas}[2015/07/22 Jonas' LaTeX Style]
+
+%%%% Packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% font/encoding
+\usepackage[utf8]{inputenc}          % .tex-file text encoding
+\usepackage[T1]{fontenc}             % vector fonts and special chars in output
+\usepackage{libertine}               % libertine font family
+\usepackage[libertine]{newtxmath}    % libertine mathematics
+\usepackage[scaled=0.9]{inconsolata} % monospace font
+\usepackage{microtype}               % microtypography
+
+% localization
+\usepackage[english]{babel}         % document language/localization
+\usepackage[babel = true]{csquotes} % global quotation style
+                                    % dependent on language
+\usepackage[htt]{hyphenat}          % hyphenation rules
+
+% maths
+\usepackage{mathrsfs} % maths script fonts
+\usepackage{amssymb}  % maths symbols
+\usepackage{amsmath}  % various maths features
+\usepackage{units}    % unit handling and nice fractions
+
+% page layout
+\usepackage{chngpage}          % allows for temporary adjustment of margins
+\usepackage[a4paper]{geometry} % ability to change margins
+\usepackage{fancyhdr}          % page headers
+
+% lists
+\usepackage{paralist} % compact versions of standard lists environments
+
+% colours
+\usepackage[usenames, table]{xcolor} % colour support
+
+% figures
+\usepackage{graphicx}   % include external images
+\usepackage{tikz}       % generate vector graphics in latex
+\usepackage{wrapfig}    % environment where text will flow around images
+\usepackage{rotating}   % rotate environments (sidewaysfigure)
+\usepackage[format          = plain, % configure captions
+            indention       = .3cm,
+            margin          = 20pt,
+            font            = small,
+            labelfont       = bf,
+            justification   = raggedright,
+            singlelinecheck = on]{caption}
+\usepackage{subcaption} % captions for subfigures
+
+% tables
+\usepackage{dcolumn}        % column alignment at decimal point
+\usepackage{threeparttable} % new table environment for better annotations
+\usepackage{booktabs}       % nice table rules
+\usepackage{longtable}      % tables across multiple pages
+
+% typography
+\usepackage{setspace} % set space between lines
+
+% bibliography
+\usepackage[style       = authoryear-ibid,
+            backend     = biber,
+            bibencoding = utf8,
+            doi         = false,
+            isbn        = false]{biblatex}
+
+% verbatim
+\usepackage{listings} % source code environment
+
+% symbols
+\usepackage{MnSymbol} % various symbols (used to mark linebreaks in listing)
+
+%%%% General Layout %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% avoid orphans and widows
+\widowpenalty = 10000
+\clubpenalty  = 10000
+
+% don't break footnotes
+\interfootnotelinepenalty = 10000
+
+% don't hyphenate across pages
+\brokenpenalty10000\relax
+
+% roman page numbers for appendix
+\let\origappendix\appendix
+\renewcommand\appendix{\clearpage\pagenumbering{roman}\origappendix}
+
+% make section heading smaller and roman
+\addtokomafont{sectioning}{\rmfamily\normalsize}
+
+% make description labels roman
+\addtokomafont{descriptionlabel}{\rmfamily}
+
+% page headers
+\fancyhf{}
+\fancyhead[CO,CE]{Draft}
+\fancyfoot[C] {\thepage}
+\pagestyle{fancy}
+
+%%%% Tables %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% global table format
+\newcommand{\tabformat}{\small\centering}
+
+% fontsize of table footnote
+\newcommand{\tabfontsizefoot}{\footnotesize}
+
+% dcolumn column type
+\newcolumntype{d}{D{,}{,}}
+
+% centering with fixed column size in tables
+\newcolumntype{Q}[1]{>{\centering\arraybackslash}p{#1}}
+
+% raggedright in tables
+\newcolumntype{P}[1]{>{\raggedright\hspace{0pt}\arraybackslash}p{#1}}
+
+%%%% Special Environments %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% better abstract environment
+\newenvironment{abstract2}{
+  \begin{center}
+      \begin{minipage}{0.9\linewidth}\small
+      \textsc{Abstract.}}{\\
+      \end{minipage}
+  \end{center}
+}
+
+% structured abstracts (multiple paragraphs separated by heading)
+\newcommand{\absdiv}[1]{%
+  \par\addvspace{.5\baselineskip}
+  \noindent\textbf{#1}\quad\ignorespaces
+}
+
+%%%% Special Features %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% inline coloured boxes
+\def\testclr#1#{\@testclr{#1}}
+\def\@testclr#1#2{
+  \setlength{\fboxsep}{0pt}\fbox{\colorbox#1{#2}{\phantom{XX}}}
+}
+
+% line filling rule
+\newcommand{\raisedrule}[2][0em]{\leavevmode\leaders\hbox{\rule[#1]{1pt}{#2}}\hfill\kern0pt}
+
+% phantom relation signs for alignment
+\newcommand\relphantom[1]{\mathrel{\phantom{#1}}}
+
+%%%% Listings %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% listings caption style
+\renewcommand{\lstlistingname}{Script} % caption name
+\DeclareCaptionFormat{listing}{\raisedrule[0.3em]{0.5pt}~\mbox{#1#2#3}~\raisedrule[0.3em]{0.5pt}}
+\captionsetup[lstlisting]{format          = listing,
+                          singlelinecheck = false,
+                          margin          = 0pt,
+                          font            = {rm},
+                          labelsep        = space,
+                          labelfont       = bf}
+
+% help package "listings" to represent german special chars
+\lstset{literate=%
+{Ö}{{\"O}}1
+{Ä}{{\"A}}1
+{Ü}{{\"U}}1
+{ß}{{\ss}}1
+{ü}{{\"u}}1
+{ä}{{\"a}}1
+{ö}{{\"o}}1
+}
+
+\lstset{
+language     = R,
+% font and size for code
+basicstyle   = \singlespacing\ttfamily\small,
+% sets automatic line breaking
+breaklines   = true,
+% where to put the line-numbers; possible values are (none, left, right)
+numbers      = left,
+% how far the line-numbers are from the code
+numbersep    = 10pt,
+% the style that is used for the line-numbers
+numberstyle  = \footnotesize,
+% number lines 5, 10, 15...
+stepnumber   = 5,firstnumber=1,
+% mark linebreaks
+prebreak     = \raisebox{0ex}[0ex][0ex]{\ensuremath{\rhookswarrow}},
+postbreak    = \raisebox{0ex}[0ex][0ex]{\ensuremath{\rcurvearrowse\space}},
+% highlighting
+commentstyle = \color{gray},
+keywordstyle = \ttfamily\small,
+stringstyle  = \color{black},
+frame        = bottomline,
+}
