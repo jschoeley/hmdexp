@@ -26,7 +26,7 @@ xlabel <- c(1750, paste0("'", seq(60, 90, 10)),
             1900, paste0("'", seq(10, 90, 10)),
             2000, "'10")
 # year limits
-xlimit <- c(1750, 2012)
+xlimit <- c(1748, 2012)
 
 # age breaks & labels for y-scale
 ybreak <- seq(0, 110, 10)
