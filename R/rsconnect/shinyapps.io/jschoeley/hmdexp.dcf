@@ -1,8 +1,8 @@
 name: hmdexp
 account: jschoeley
 server: shinyapps.io
-bundleId: 261337
+bundleId: 272348
 url: https://jschoeley.shinyapps.io/hmdexp
-when: 1441816411.40668
+when: 1443038510.67766
 asMultiple: FALSE
 asStatic: FALSE

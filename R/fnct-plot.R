@@ -16,20 +16,21 @@ theme_hmdexp <-
 # Plot Lexis Grid Breaks --------------------------------------------------
 
 # year breaks for x-scale
-xbreak <- c(1670, seq(1680, 1690, 10),
-            1700, seq(1710, 1790, 10),
+xbreak <- c(1750, seq(1760, 1790, 10),
             1800, seq(1810, 1890, 10),
             1900, seq(1910, 1990, 10),
             2000, 2010)
 # year labels for x-scale
-xlabel <- c(1670, paste0("'", seq(80, 90, 10)),
-            1700, paste0("'", seq(10, 90, 10)),
+xlabel <- c(1750, paste0("'", seq(60, 90, 10)),
             1800, paste0("'", seq(10, 90, 10)),
             1900, paste0("'", seq(10, 90, 10)),
             2000, "'10")
 
 # age breaks & labels for y-scale
 ybreak <- seq(0, 110, 10)
+
+# year limits
+xlimit <- c(1750, 2012)
 
 # Plot mx -----------------------------------------------------------------
 
@@ -53,7 +54,7 @@ PlotMx <- function (x) {
                       drop = FALSE) +
     guides(fill = guide_legend(reverse = TRUE)) +
     # custom xy scale labels
-    scale_x_continuous("Year", limits = c(1668, 2012),
+    scale_x_continuous("Year", limits = xlimit,
                        breaks = xbreak, labels = xlabel,
                        expand = c(0, 0.5)) +
     scale_y_continuous("Age", limits = c(0, 112),
@@ -89,7 +90,7 @@ PlotMxSexDiff <- function (x) {
                       drop = FALSE) +
     guides(fill = guide_legend(reverse = TRUE)) +
     # custom xy scale labels
-    scale_x_continuous("Year", limits = c(1668, 2012),
+    scale_x_continuous("Year", limits = xlimit,
                        breaks = xbreak, labels = xlabel,
                        expand = c(0, 0.5)) +
     scale_y_continuous("Age", limits = c(0, 112),
@@ -125,7 +126,7 @@ PlotMxCntryDiff <- function (x) {
                       drop = FALSE) +
     guides(fill = guide_legend(reverse = TRUE)) +
     # custom xy scale labels
-    scale_x_continuous("Year", limits = c(1668, 2012),
+    scale_x_continuous("Year", limits = xlimit,
                        breaks = xbreak, labels = xlabel,
                        expand = c(0, 0.5)) +
     scale_y_continuous("Age", limits = c(0, 112),

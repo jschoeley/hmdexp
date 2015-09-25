@@ -86,6 +86,21 @@
 % don't hyphenate across pages
 \brokenpenalty10000\relax
 
+% custom title
+\makeatletter
+
+\def\maketitle{%
+\begin{center}
+\textbf{\Huge\@title}%
+\vskip 0.2cm
+\textbf{\Large\@subtitle}%
+\vskip 0.4cm
+{\large\@author, \@date}%
+\end{center}
+\par}
+
+\makeatother
+
 % roman page numbers for appendix
 \let\origappendix\appendix
 \renewcommand\appendix{\clearpage\pagenumbering{roman}\origappendix}
@@ -98,7 +113,7 @@
 
 % page headers
 \fancyhf{}
-\fancyhead[CO,CE]{Draft}
+\fancyhead[CO,CE]{PAA 2016 -- Extended Abstract}
 \fancyfoot[C] {\thepage}
 \pagestyle{fancy}
 
