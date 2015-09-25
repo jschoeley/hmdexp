@@ -1,3 +1,9 @@
 .plotRow{
   height:38vw !important;
 }
+.navbar-brand{
+  font-style: italic;
+}
+.plot_main_title{
+  height: 30px;
+}

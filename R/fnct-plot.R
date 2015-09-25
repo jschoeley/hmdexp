@@ -25,12 +25,13 @@ xlabel <- c(1750, paste0("'", seq(60, 90, 10)),
             1800, paste0("'", seq(10, 90, 10)),
             1900, paste0("'", seq(10, 90, 10)),
             2000, "'10")
+# year limits
+xlimit <- c(1750, 2012)
 
 # age breaks & labels for y-scale
 ybreak <- seq(0, 110, 10)
-
-# year limits
-xlimit <- c(1750, 2012)
+# age limits
+ylimit <- c(0, 112)
 
 # Plot mx -----------------------------------------------------------------
 
@@ -57,7 +58,7 @@ PlotMx <- function (x) {
     scale_x_continuous("Year", limits = xlimit,
                        breaks = xbreak, labels = xlabel,
                        expand = c(0, 0.5)) +
-    scale_y_continuous("Age", limits = c(0, 112),
+    scale_y_continuous("Age", limits = ylimit,
                        breaks = ybreak,
                        expand = c(0, 0.5)) +
     # equidistant xy-coordinates
@@ -93,7 +94,7 @@ PlotMxSexDiff <- function (x) {
     scale_x_continuous("Year", limits = xlimit,
                        breaks = xbreak, labels = xlabel,
                        expand = c(0, 0.5)) +
-    scale_y_continuous("Age", limits = c(0, 112),
+    scale_y_continuous("Age", limits = ylimit,
                        breaks = ybreak,
                        expand = c(0, 0.5)) +
     # equidistant xy-coordinates
@@ -129,7 +130,7 @@ PlotMxCntryDiff <- function (x) {
     scale_x_continuous("Year", limits = xlimit,
                        breaks = xbreak, labels = xlabel,
                        expand = c(0, 0.5)) +
-    scale_y_continuous("Age", limits = c(0, 112),
+    scale_y_continuous("Age", limits = ylimit,
                        breaks = ybreak,
                        expand = c(0, 0.5)) +
     # equidistant xy-coordinates
