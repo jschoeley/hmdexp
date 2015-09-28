@@ -38,6 +38,11 @@ ylimit <- c(0, 112)
 #' Plot mx Values
 PlotMx <- function (x) {
 
+  # colour scale title
+  label <- expression(atop(atop("Deaths per",
+                                "10,000 Person Years"),
+                           m(x)%*%10000))
+
   # plot
   plot_mx <-
     ggplot(x, aes(x = year, y = age)) +
@@ -47,9 +52,7 @@ PlotMx <- function (x) {
     # heatmap
     geom_tile(aes(fill = mx)) +
     # discrete colour scale
-    scale_fill_brewer(expression(atop(atop("Deaths per",
-                                           "10,000 Person Years"),
-                                      m(x)%*%10000)),
+    scale_fill_brewer(label,
                       palette = "PuBuGn",
                       # plot the full scale even if not all colours are used
                       drop = FALSE) +
@@ -82,7 +85,7 @@ PlotMxSexDiff <- function (x) {
                 colour = "grey50", size = 0.25, lty = 2) +
     # heatmap
     geom_tile(aes(fill = mx_sex_diff)) +
-    # divergent, cntn. colour scale
+    # divergent colour scale
     scale_fill_manual(expression(atop(atop("Absolute Difference in",
                                            "Female and Male Mortality Rates"),
                                       m(x)[F]-m(x)[M])),

@@ -58,6 +58,7 @@ shinyUI(
                                 sex_radio),
                conditionalPanel("(input.navbar == 'tab_mx_sex_diff')",
                                 column(1)),
+               scale_switch,
                about)
 
   )
