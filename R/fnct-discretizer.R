@@ -16,10 +16,10 @@ DiscretizeMx <- function (x) {
 
   # generate timeline of discrete mx
   x %>%
-    mutate(mx = cut(mx*scale,
-                    breaks = breaks,
-                    labels = labels,
-                    include.lowest = TRUE)) -> result
+    mutate(mx_disc = cut(mx*scale,
+                         breaks = breaks,
+                         labels = labels,
+                         include.lowest = TRUE)) -> result
 
   return(result)
 

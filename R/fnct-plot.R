@@ -13,6 +13,10 @@ theme_hmdexp <-
         legend.text       = element_text(colour = "grey50"),
         legend.title      = element_text(colour = "grey50"))
 
+cpal_PuBuGn <- c("#FFF7FB", "#ECE2F0", "#D0D1E6",
+                 "#A6BDDB", "#67A9CF", "#3690C0",
+                 "#02818A", "#016C59", "#014636")
+
 # Plot Lexis Grid Breaks --------------------------------------------------
 
 # year breaks for x-scale
@@ -58,24 +62,35 @@ PlotLexisGrid <- function (x) {
 # Plot mx -----------------------------------------------------------------
 
 #' Plot mx Values
-PlotMx <- function (x) {
+PlotMx <- function (x, cont) {
 
   # title for colour scale legend
   fill_label <- expression(atop(atop("Deaths per",
                                      "10,000 Person Years"),
                                 m(x)%*%10000))
 
-  # plot
-  plot_mx <-
-    PlotLexisGrid(x) +
-    # heatmap
-    geom_tile(aes(fill = mx)) +
-    # discrete colour scale
-    scale_fill_brewer(fill_label,
-                      palette = "PuBuGn",
-                      # plot the full scale even if not all colours are used
-                      drop = FALSE) +
-    guides(fill = guide_legend(reverse = TRUE))
+  if (cont == FALSE) {
+    plot_mx <-
+      PlotLexisGrid(x) +
+      # discrete heatmap
+      geom_tile(aes(fill = mx_disc)) +
+      # discrete colour scale
+      scale_fill_brewer(fill_label,
+                        palette = "PuBuGn",
+                        # plot the full scale even if not all colours are used
+                        drop = FALSE) +
+      guides(fill = guide_legend(reverse = TRUE))
+  }
+  if (cont == TRUE) {
+    plot_mx <-
+      PlotLexisGrid(x) +
+      # continuous heatmap
+      geom_tile(aes(fill = mx)) +
+      # continuous colour scale
+      scale_fill_gradientn(fill_label, colours = cpal_PuBuGn,
+                           trans = "log10", limits = c(0.00001, 1),
+                           breaks = c(0.0001, 0.001, 0.01, 0.1, 1))
+  }
 
   return(plot_mx)
 

@@ -27,7 +27,7 @@ shinyServer(function(input, output, session) {
            country   == hmdcbook[hmdcbook$Label == input$country, "Code"],
            sex       == input$sex,
            timebase  == input$timebase) %>%
-      DiscretizeMx()
+    DiscretizeMx()
   })
 
   # filter sex diff data based on user input
@@ -88,7 +88,7 @@ shinyServer(function(input, output, session) {
   output$plot_mx <- renderPlot({
 
     # generate heatmap
-    plot_mx <- PlotMx(dataset_mx())
+    plot_mx <- PlotMx(dataset_mx(), input$cont_scale)
 
     print(plot_mx)
 
