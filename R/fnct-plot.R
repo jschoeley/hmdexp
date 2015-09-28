@@ -13,9 +13,9 @@ theme_hmdexp <-
         legend.text       = element_text(colour = "grey50"),
         legend.title      = element_text(colour = "grey50"))
 
-cpal_PuBuGn <- c("#FFF7FB", "#ECE2F0", "#D0D1E6",
-                 "#A6BDDB", "#67A9CF", "#3690C0",
-                 "#02818A", "#016C59", "#014636")
+cpal_mx <- c("#FFFFD9", "#EDF8B1", "#C7E9B4",
+             "#7FCDBB", "#41B6C4", "#1D91C0",
+             "#225EA8", "#253494", "#081D58")
 
 # Plot Lexis Grid Breaks --------------------------------------------------
 
@@ -75,21 +75,24 @@ PlotMx <- function (x, cont) {
       # discrete heatmap
       geom_tile(aes(fill = mx_disc)) +
       # discrete colour scale
-      scale_fill_brewer(fill_label,
-                        palette = "PuBuGn",
+      scale_fill_manual(fill_label, values = cpal_mx,
                         # plot the full scale even if not all colours are used
                         drop = FALSE) +
       guides(fill = guide_legend(reverse = TRUE))
   }
   if (cont == TRUE) {
+    breaks <- c(0.0001, 0.001, 0.01, 0.1, 1)
+    labels <- breaks * 10000
     plot_mx <-
       PlotLexisGrid(x) +
       # continuous heatmap
       geom_tile(aes(fill = mx)) +
       # continuous colour scale
-      scale_fill_gradientn(fill_label, colours = cpal_PuBuGn,
-                           trans = "log10", limits = c(0.00001, 1),
-                           breaks = c(0.0001, 0.001, 0.01, 0.1, 1))
+      scale_fill_gradientn(fill_label, colours = cpal_mx,
+                           values = c(0, (0.9/8)*(1:7), 1),
+                           trans  = "log10",
+                           breaks = breaks,
+                           labels = labels)
   }
 
   return(plot_mx)
