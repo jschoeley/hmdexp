@@ -55,12 +55,15 @@ shinyUI(
                conditionalPanel("(input.navbar == 'tab_mx_cntry_diff')",
                                 cntry1_diff_dropdown,
                                 cntry2_diff_dropdown),
-               timebase_radio,
                conditionalPanel("(input.navbar == 'tab_mx' || input.navbar == 'tab_mx_cntry_diff')",
                                 sex_radio),
                conditionalPanel("(input.navbar == 'tab_mx_sex_diff')",
                                 column(1)),
-               scale_switch,
+               column(1,
+                      fluidRow(advanced_switch),
+                      conditionalPanel("(input.advanced == true)",
+                                       fluidRow(timebase_radio),
+                                       fluidRow(scale_switch))),
                about)
 
   )

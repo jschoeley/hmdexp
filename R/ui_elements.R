@@ -9,7 +9,7 @@ cntry_lab  <- hmdcbook$Label
 
 # country dropdown menu
 cntry_dropdown <-
-  column(3,
+  column(4,
          selectInput("country",
                      label     = "Choose Country",
                      choices   = cntry_lab, multiple = FALSE,
@@ -35,24 +35,6 @@ cntry2_diff_dropdown <-
                      selectize = FALSE)
   )
 
-# timebase radio button
-timebase_radio <-
-  column(1,
-         radioButtons(inputId = "timebase",
-                      label   = "Choose Timebase",
-                      choices = list(Period  = "period",
-                                     Cohort  = "cohort"),
-                      selected = "period")
-  )
-
-# scale switch
-scale_switch <-
-  column(1,
-         checkboxInput(inputId = "cont_scale",
-                       label   = "Continuous Scale",
-                       value   = FALSE)
-  )
-
 # sex radio button
 sex_radio <-
   column(1,
@@ -64,6 +46,25 @@ sex_radio <-
                                      Male   = "m"),
                       selected = "fm")
   )
+
+# scale switch
+scale_switch <-
+         checkboxInput(inputId = "cont_scale",
+                       label   = "Continuous Scale",
+                       value   = FALSE)
+
+# timebase radio button
+timebase_radio <-
+         radioButtons(inputId = "timebase",
+                      label   = "Choose Timebase",
+                      choices = list(Period  = "period",
+                                     Cohort  = "cohort"),
+                      selected = "period")
+
+advanced_switch <-
+  checkboxInput(inputId = "advanced",
+                label   = "Advanced Options",
+                value   = FALSE)
 
 # about
 about <-
