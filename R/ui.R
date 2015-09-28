@@ -1,6 +1,8 @@
 # Input -------------------------------------------------------------------
 
+# load libraries
 source("./init.R")
+# load ui building blocks
 source("./ui_elements.R")
 
 # Page Layout -------------------------------------------------------------

@@ -1,6 +1,7 @@
 # Input -------------------------------------------------------------------
 
-source("./init.R")         # load libraries
+# load libraries
+source("./init.R")
 # load function definitions
 source("./fnct-misc.R")
 source("./fnct-discretizer.R")
@@ -25,14 +26,16 @@ shinyServer(function(input, output, session) {
     filter(hmd_mx,
            country   == hmdcbook[hmdcbook$Label == input$country, "Code"],
            sex       == input$sex,
-           timebase  == input$timebase)
+           timebase  == input$timebase) %>%
+      DiscretizeMx()
   })
 
   # filter sex diff data based on user input
   dataset_mx_sex_diff <- reactive({
     filter(hmd_mx_sex_diff,
            country   == hmdcbook[hmdcbook$Label == input$country, "Code"],
-           timebase  == input$timebase)
+           timebase  == input$timebase) %>%
+      DiscretizeMxSexDiff()
   })
 
   # filter country comparison data based on user input
@@ -49,7 +52,8 @@ shinyServer(function(input, output, session) {
       mutate(mx_country_diff = mx.x - mx.y) %>%
       select(country_1 = country.x, country_2 = country.y,
              timebase, sex, year, age, mx_country_diff) %>%
-      na.omit()
+      na.omit() %>%
+      DiscretizeMxCntryDiff(., input = input)
   })
 
   # Output: Mortality Rate Plot Title -------------------------------------
@@ -83,11 +87,8 @@ shinyServer(function(input, output, session) {
 
   output$plot_mx <- renderPlot({
 
-    # discretize mx
-    years_of_mx <- DiscretizeMx(dataset_mx())
-
     # generate heatmap
-    plot_mx <- PlotMx(years_of_mx)
+    plot_mx <- PlotMx(dataset_mx())
 
     print(plot_mx)
 
@@ -97,9 +98,7 @@ shinyServer(function(input, output, session) {
 
   output$plot_mx_sex_diff <- renderPlot({
 
-    years_of_mx_sex_diff <- DiscretizeMxSexDiff(dataset_mx_sex_diff())
-
-    plot_mx_sex_diff <- PlotMxSexDiff(years_of_mx_sex_diff)
+    plot_mx_sex_diff <- PlotMxSexDiff(dataset_mx_sex_diff())
 
     print(plot_mx_sex_diff)
 
@@ -109,10 +108,7 @@ shinyServer(function(input, output, session) {
 
   output$plot_mx_cntry_diff <- renderPlot({
 
-    years_of_mx_cntry_diff <- DiscretizeMxCntryDiff(dataset_mx_cntry_diff(),
-                                                    input = input)
-
-    plot_mx_cntry_diff <- PlotMxCntryDiff(years_of_mx_cntry_diff)
+    plot_mx_cntry_diff <- PlotMxCntryDiff(dataset_mx_cntry_diff())
 
     print(plot_mx_cntry_diff)
 
