@@ -13,9 +13,24 @@ theme_hmdexp <-
         legend.text       = element_text(colour = "grey50"),
         legend.title      = element_text(colour = "grey50"))
 
-cpal_mx <- c("#FFFFD9", "#EDF8B1", "#C7E9B4",
-             "#7FCDBB", "#41B6C4", "#1D91C0",
-             "#225EA8", "#253494", "#081D58")
+# Plot Colours ------------------------------------------------------------
+
+# dput(RColorBrewer::brewer.pal(9, "PuBuGn"))
+cpal_mx <- c("#FFF7FB", "#ECE2F0", "#D0D1E6",
+             "#A6BDDB", "#67A9CF", "#3690C0",
+             "#02818A", "#016C59", "#014636")
+
+# dput(RColorBrewer::brewer.pal(11, "RdBu"))
+cpal_sex <- c("#67001F", "#B2182B", "#D6604D",
+              "#F4A582", "#FDDBC7", "#F7F7F7",
+              "#D1E5F0", "#92C5DE", "#4393C3",
+              "#2166AC", "#053061")
+
+# dput(RColorBrewer::brewer.pal(1, "BrBG"))
+cpal_cntry <- c("#543005", "#8C510A", "#BF812D",
+                "#DFC27D", "#F6E8C3", "#F5F5F5",
+                "#C7EAE5", "#80CDC1", "#35978F",
+                "#01665E", "#003C30")
 
 # Plot Lexis Grid Breaks --------------------------------------------------
 
@@ -37,7 +52,6 @@ ybreak <- seq(0, 110, 10)
 # age limits
 ylimit <- c(0, 112)
 
-
 # Lexis Grid Base Plot ----------------------------------------------------
 
 PlotLexisGrid <- function (x) {
@@ -57,7 +71,6 @@ PlotLexisGrid <- function (x) {
     # add theme
     theme_hmdexp
 }
-
 
 # Plot mx -----------------------------------------------------------------
 
@@ -102,24 +115,48 @@ PlotMx <- function (x, cont) {
 # Plot mx Sex Differences -------------------------------------------------
 
 #' Plot mx Sex Differences
-PlotMxSexDiff <- function (x) {
+PlotMxSexDiff <- function (x, cont) {
 
   # title for colour scale legend
-  fill_label <- expression(atop(atop("Absolute Difference in",
-                                     "Female and Male Mortality Rates"),
-                                m(x)[F]-m(x)[M]))
+  fill_label <- expression(atop(atop("Mortality Rate Ratio between",
+                                     "Females and Males"),
+                                m(x)[F]/m(x)[M]))
 
-  # plot
+  if (cont == FALSE) {
   plot_mx_sex_diff <-
     PlotLexisGrid(x) +
-    # heatmap
-    geom_tile(aes(fill = mx_sex_diff)) +
-    # divergent colour scale
+    # discrete heatmap
+    geom_tile(aes(fill = mx_sex_diff_disc)) +
+    # discrete divergent colour scale
     scale_fill_manual(fill_label,
-                      values = rev(brewer.pal(10, "RdBu")),
+                      values = rev(cpal_sex),
                       # plot the full scale even if not all colours are used
                       drop = FALSE) +
     guides(fill = guide_legend(reverse = TRUE))
+  }
+  if (cont == TRUE) {
+    breaks <- c(2/1,
+                150/100,
+                1,
+                100/150,
+                1/2)
+    labels <- c("100% Excess Female Mortality",
+                "50%",
+                "Equal Mortality",
+                "50%",
+                "100% Excess Male Mortality")
+
+    plot_mx_sex_diff <-
+      PlotLexisGrid(x) +
+      # continuous heatmap
+      geom_tile(aes(fill = mx_sex_diff)) +
+      # continuous divergent colour scale
+      scale_fill_gradientn(fill_label,
+                           trans = "log10truncate",
+                           colours = rev(cpal_sex),
+                           breaks = breaks,
+                           labels = labels)
+  }
 
   return(plot_mx_sex_diff)
 
@@ -128,24 +165,50 @@ PlotMxSexDiff <- function (x) {
 # Plot mx Country Differences ---------------------------------------------
 
 #' Plot mx Country Differences
-PlotMxCntryDiff <- function (x) {
+PlotMxCntryDiff <- function (x, cont, input) {
 
   # title for colour scale legend
-  fill_label <- expression(atop(atop("Absolute Difference in",
-                                     "Country 1 and Country 2 Mortality Rates"),
-                                m(x)[1]-m(x)[2]))
+  fill_label <- expression(atop(atop("Mortality Rate Ratio between",
+                                     "Country 1 and Country 2"),
+                                m(x)[1]/m(x)[2]))
 
   # plot
+  if (cont == FALSE) {
   plot_mx_cntry_diff <-
     PlotLexisGrid(x) +
-    # heatmap
-    geom_tile(aes(fill = mx_country_diff)) +
-    # divergent colour scale
-    scale_fill_brewer(fill_label,
-                      palette = "BrBG",
+    # discrete heatmap
+    geom_tile(aes(fill = mx_country_diff_disc)) +
+    # discrete divergent colour scale
+    scale_fill_manual(fill_label,
+                      values = rev(cpal_cntry),
                       # plot the full scale even if not all colours are used
                       drop = FALSE) +
     guides(fill = guide_legend(reverse = TRUE))
+  }
+  if (cont == TRUE) {
+    breaks <- c(1/2,
+                100/150,
+                1,
+                150/100,
+                2/1)
+    labels <- c(paste("100% Excess Mortality", input$country_2),
+                "50%",
+                "Equal Mortality",
+                "50%",
+                paste("100% Excess Mortality", input$country_1))
+
+    plot_mx_cntry_diff <-
+      PlotLexisGrid(x) +
+      # continuous heatmap
+      geom_tile(aes(fill = mx_country_diff)) +
+      # continuous divergent colour scale
+      scale_fill_gradientn(fill_label,
+                           limits = c(0.5, 2),
+                           trans = "log10truncate",
+                           colours = rev(cpal_cntry),
+                           breaks = breaks,
+                           labels = labels)
+  }
 
   return(plot_mx_cntry_diff)
 

@@ -28,20 +28,28 @@ DiscretizeMx <- function (x) {
 #' Discretize a Continuous mx Sex Diff Vector
 DiscretizeMxSexDiff <- function (x) {
 
-  # mortality rate sex diff breaks for discrete colour scale
-  breaks <- c(-100 , -1, -0.01, -0.001, -0.0001,
-              0, 0.0001, 0.001, 0.01, 1, 100)
-  labels <- c("< -1 Excess Male Mortality",
-              "-1", "-0.01", "-0.001", "-0.0001",
-              "+0.0001", "+0.001", "+0.01", "+1",
-              "> 1 Excess Female Mortality")
+
+  # mortality rate sex ratio breaks for discrete colour scale
+  breaks <- c(0, 1/2 , 100/175, 100/150, 100/125, 100/101,
+              101/100, 125/100, 150/100, 175/100, 2/1, Inf)
+  labels <- c(">100% Excess Male Mortality",
+              "75 to 100%",
+              "   50 to 75%",
+              "      25 to 50%",
+              "         1 to 25%",
+              "            -1 to 1%",
+              "               1 to 25%",
+              "                  25 to 50%",
+              "                     50 to 75%",
+              "                        75 to 100%",
+              ">100% Excess Female Mortality")
 
   # generate timeline of discrete mx
   x %>%
-    mutate(mx_sex_diff = cut(mx_sex_diff,
-                             breaks = breaks,
-                             labels = labels,
-                             include.lowest = TRUE)) -> result
+    mutate(mx_sex_diff_disc = cut(mx_sex_diff,
+                                  breaks = breaks,
+                                  labels = labels,
+                                  include.lowest = TRUE)) -> result
 
   return(result)
 
@@ -50,20 +58,27 @@ DiscretizeMxSexDiff <- function (x) {
 #' Discretize a Continuous mx Country Diff Vector
 DiscretizeMxCntryDiff <- function (x, input) {
 
-  # mortality rate sex diff breaks for discrete colour scale
-  breaks <- c(-100 , -1, -0.01, -0.001, -0.0001,
-              0, 0.0001, 0.001, 0.01, 1, 100)
-  labels <- c(paste("< -1 Excess Mortality", input$country_2),
-              "-1", "-0.01", "-0.001", "-0.0001",
-              "+0.0001", "+0.001", "+0.01", "+1",
-              paste("> 1 Excess Mortality", input$country_1))
+  # mortality rate country ratio breaks for discrete colour scale
+  breaks <- c(0, 1/2 , 100/175, 100/150, 100/125, 100/101,
+              101/100, 125/100, 150/100, 175/100, 2/1, Inf)
+  labels <- c(paste(">100% Excess Mortality", input$country_2),
+              "75 to 100%",
+              "   50 to 75%",
+              "      25 to 50%",
+              "         1 to 25%",
+              "            -1 to 1%",
+              "               1 to 25%",
+              "                  25 to 50%",
+              "                     50 to 75%",
+              "                        75 to 100%",
+              paste(">100% Excess Mortality", input$country_1))
 
   # generate timeline of discrete mx
   x %>%
-    mutate(mx_country_diff = cut(mx_country_diff,
-                                 breaks = breaks,
-                                 labels = labels,
-                                 include.lowest = TRUE)) -> result
+    mutate(mx_country_diff_disc = cut(mx_country_diff,
+                                      breaks = breaks,
+                                      labels = labels,
+                                      include.lowest = TRUE)) -> result
 
   return(result)
 

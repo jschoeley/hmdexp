@@ -49,7 +49,7 @@ shinyServer(function(input, output, session) {
                         sex       == input$sex,
                         timebase  == input$timebase)
     full_join(country_1, country_2, by = c("timebase", "sex", "year", "age")) %>%
-      mutate(mx_country_diff = mx.x - mx.y) %>%
+      mutate(mx_country_diff = mx.x / mx.y) %>%
       select(country_1 = country.x, country_2 = country.y,
              timebase, sex, year, age, mx_country_diff) %>%
       na.omit() %>%
@@ -98,7 +98,7 @@ shinyServer(function(input, output, session) {
 
   output$plot_mx_sex_diff <- renderPlot({
 
-    plot_mx_sex_diff <- PlotMxSexDiff(dataset_mx_sex_diff())
+    plot_mx_sex_diff <- PlotMxSexDiff(dataset_mx_sex_diff(), input$cont_scale)
 
     print(plot_mx_sex_diff)
 
@@ -108,7 +108,7 @@ shinyServer(function(input, output, session) {
 
   output$plot_mx_cntry_diff <- renderPlot({
 
-    plot_mx_cntry_diff <- PlotMxCntryDiff(dataset_mx_cntry_diff())
+    plot_mx_cntry_diff <- PlotMxCntryDiff(dataset_mx_cntry_diff(), input$cont_scale, input)
 
     print(plot_mx_cntry_diff)
 

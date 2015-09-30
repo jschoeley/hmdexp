@@ -52,7 +52,7 @@ GenerateMxSexDiffPlotMainTitle <- function (x, input) {
   if (IsDataFrameEmpty(x) == TRUE){
     main_title <- "No Data Available"
   } else {
-    main_title <- paste0("Mortality Rate Sex Differences in ", input$country)
+    main_title <- paste0("Mortality Rate Sex Ratio in ", input$country)
   }
 
   return(main_title)
@@ -100,7 +100,7 @@ GenerateMxCntryDiffPlotMainTitle <- function (x, input) {
     country_1_title <- input$country_1
     country_2_title <- input$country_2
 
-    main_title <- paste0("Mortality Rate Country Differences of ",
+    main_title <- paste0("Mortality Rate Ratio between ",
                          country_1_title, " and ", country_2_title)
 
   }

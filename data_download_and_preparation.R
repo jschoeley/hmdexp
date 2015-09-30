@@ -13,6 +13,7 @@ hmd_mx <- HMDget(.country = hmdcbook$Code,
                  .timeframe = "p+c", .measure = "mx",
                  username, password)
 
+# write_csv(hmd_mx, path = "./priv/hmdmx.csv")
 # hmd_mx <- read_csv("./priv/hmdmx.csv")
 
 # Transform Data ----------------------------------------------------------
@@ -33,15 +34,17 @@ hmd_mx %>%
   # remove NA's
   na.omit() -> hmd_mx
 
-save(hmd_mx, file = "./R/data/hmd_mx.Rdata")
+# save(hmd_mx, file = "./R/data/hmd_mx.Rdata")
 
-# derive data set for mortality rate sex differences
+# derive data set for mortality rate sex ratios
 hmd_mx %>%
-  # compute sex difference in mortality
+  # compute sex ratios of mortality rates
   filter(sex != "fm") %>%
   spread(key = sex, value = mx) %>%
-  mutate(mx_sex_diff = f - m) %>%
+  mutate(mx_sex_diff = f/m) %>%
   # strip sex specific mortality rates
-  select(-f, -m) -> hmd_mx_sex_diff
+  select(-f, -m) %>%
+  # remove NA's
+  na.omit() -> hmd_mx_sex_diff
 
 save(hmd_mx_sex_diff, file = "./R/data/hmd_mx_sex_diff.Rdata")
