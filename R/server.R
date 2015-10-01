@@ -1,12 +1,12 @@
 # Input -------------------------------------------------------------------
 
 # load libraries
-source("./init.R")
+source("./00-init.R")
 # load function definitions
-source("./fnct-misc.R")
-source("./fnct-discretizer.R")
-source("./fnct-plot.R")
-source("./fnct-plot_title.R")
+source("./01a-fnct-misc.R")
+source("./01b-fnct-discretizer.R")
+source("./01c-fnct-plot.R")
+source("./01d-fnct-plot_title.R")
 
 # load human mortality data
 load("./data/hmd_mx.Rdata")
