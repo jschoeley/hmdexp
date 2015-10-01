@@ -59,7 +59,7 @@ shinyUI(
                                 sex_radio),
                conditionalPanel("(input.navbar == 'tab_mx_sex_diff')",
                                 column(1)),
-               column(1,
+               column(2,
                       fluidRow(advanced_switch),
                       conditionalPanel("(input.advanced == true)",
                                        fluidRow(timebase_radio),
