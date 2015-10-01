@@ -60,12 +60,12 @@ PlotLexisGrid <- function (x) {
     geom_abline(intercept = seq(-2000, 2000, 10),
                 colour = "grey50", size = 0.25, lty = 2) +
     # custom xy scale labels
-    scale_x_continuous("Year", limits = xlimit,
+    scale_x_continuous("Year",
                        breaks = xbreak, labels = xlabel,
-                       expand = c(0, 0.5)) +
-    scale_y_continuous("Age", limits = ylimit,
+                       limits = xlimit, expand = c(0, 0.5)) +
+    scale_y_continuous("Age",
                        breaks = ybreak,
-                       expand = c(0, 0.5)) +
+                       limits = ylimit, expand = c(0, 0.5)) +
     # equidistant xy-coordinates
     coord_equal() +
     # add theme
@@ -82,17 +82,21 @@ PlotMx <- function (x, cont) {
                                      "10,000 Person Years"),
                                 m(x)%*%10000))
 
+  # add discrete heatmap to plot
   if (cont == FALSE) {
     plot_mx <-
       PlotLexisGrid(x) +
       # discrete heatmap
       geom_tile(aes(fill = mx_disc)) +
       # discrete colour scale
-      scale_fill_manual(fill_label, values = cpal_mx,
-                        # plot the full scale even if not all colours are used
+      scale_fill_manual(fill_label,
+                        values = cpal_mx,
+                        # plot the full scale even
+                        # if not all colours are used
                         drop = FALSE) +
       guides(fill = guide_legend(reverse = TRUE))
   }
+  # add continuous heatmap to plot
   if (cont == TRUE) {
     breaks <- c(0.0001, 0.001, 0.01, 0.1, 1)
     labels <- breaks * 10000
@@ -101,11 +105,13 @@ PlotMx <- function (x, cont) {
       # continuous heatmap
       geom_tile(aes(fill = mx)) +
       # continuous colour scale
-      scale_fill_gradientn(fill_label, colours = cpal_mx,
+      scale_fill_gradientn(fill_label,
+                           colours = cpal_mx,
+                           # stretch top end of colour scale
+                           # across wider data range
                            values = c(0, (0.9/8)*(1:7), 1),
-                           trans  = "log10",
-                           breaks = breaks,
-                           labels = labels)
+                           breaks = breaks, labels = labels,
+                           trans  = "log10")
   }
 
   return(plot_mx)
@@ -122,6 +128,7 @@ PlotMxSexDiff <- function (x, cont) {
                                      "Females and Males"),
                                 m(x)[F]/m(x)[M]))
 
+  # add discrete heatmap to plot
   if (cont == FALSE) {
   plot_mx_sex_diff <-
     PlotLexisGrid(x) +
@@ -130,10 +137,12 @@ PlotMxSexDiff <- function (x, cont) {
     # discrete divergent colour scale
     scale_fill_manual(fill_label,
                       values = rev(cpal_sex),
-                      # plot the full scale even if not all colours are used
+                      # plot the full scale even if
+                      # not all colours are used
                       drop = FALSE) +
     guides(fill = guide_legend(reverse = TRUE))
   }
+  # add continuous heatmap to plot
   if (cont == TRUE) {
     breaks <- c(2/1,
                 150/100,
@@ -153,11 +162,12 @@ PlotMxSexDiff <- function (x, cont) {
       # continuous divergent colour scale
       scale_fill_gradientn(fill_label,
                            colours = rev(cpal_sex),
-                           breaks = breaks,
-                           labels = labels,
-                           limits = c(0.5, 2),
-                           trans = "log10",
-                           oob = squish)
+                           breaks  = breaks, labels = labels,
+                           limits  = c(0.5, 2),
+                           trans   = "log10",
+                           # squish outside limit values
+                           # into extremes of colourscale
+                           oob     = squish)
   }
 
   return(plot_mx_sex_diff)
@@ -174,7 +184,7 @@ PlotMxCntryDiff <- function (x, cont, input) {
                                      "Country 1 and Country 2"),
                                 m(x)[1]/m(x)[2]))
 
-  # plot
+  # add discrete heatmap to plot
   if (cont == FALSE) {
   plot_mx_cntry_diff <-
     PlotLexisGrid(x) +
@@ -183,10 +193,12 @@ PlotMxCntryDiff <- function (x, cont, input) {
     # discrete divergent colour scale
     scale_fill_manual(fill_label,
                       values = rev(cpal_cntry),
-                      # plot the full scale even if not all colours are used
+                      # plot the full scale even if
+                      # not all colours are used
                       drop = FALSE) +
     guides(fill = guide_legend(reverse = TRUE))
   }
+  # add continuous heatmap to plot
   if (cont == TRUE) {
     breaks <- c(1/2,
                 100/150,
@@ -206,10 +218,11 @@ PlotMxCntryDiff <- function (x, cont, input) {
       # continuous divergent colour scale
       scale_fill_gradientn(fill_label,
                            colours = rev(cpal_cntry),
-                           breaks = breaks,
-                           labels = labels,
+                           breaks = breaks, labels = labels,
                            limits = c(0.5, 2),
                            trans = "log10",
+                           # squish outside limit values
+                           # into extremes of colourscale
                            oob = squish)
   }
 

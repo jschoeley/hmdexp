@@ -32,7 +32,6 @@ DiscretizeMx <- function (x) {
 #' Discretize a Continuous mx Sex Diff Vector
 DiscretizeMxSexDiff <- function (x) {
 
-
   # mortality rate sex ratio breaks for discrete colour scale
   breaks <- c(0, 1/2 , 100/175, 100/150, 100/125, 100/101,
               101/100, 125/100, 150/100, 175/100, 2/1, Inf)

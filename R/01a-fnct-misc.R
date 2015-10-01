@@ -1,6 +1,6 @@
 # Misc --------------------------------------------------------------------
 
 # return empty dataframe indicator
-IsDataFrameEmpty <- function(x) {
+IsDataFrameEmpty <- function (x) {
   ifelse(nrow(x) == 0, TRUE, FALSE)
 }
