@@ -152,10 +152,12 @@ PlotMxSexDiff <- function (x, cont) {
       geom_tile(aes(fill = mx_sex_diff)) +
       # continuous divergent colour scale
       scale_fill_gradientn(fill_label,
-                           trans = "log10truncate",
                            colours = rev(cpal_sex),
                            breaks = breaks,
-                           labels = labels)
+                           labels = labels,
+                           limits = c(0.5, 2),
+                           trans = "log10",
+                           oob = squish)
   }
 
   return(plot_mx_sex_diff)
@@ -203,11 +205,12 @@ PlotMxCntryDiff <- function (x, cont, input) {
       geom_tile(aes(fill = mx_country_diff)) +
       # continuous divergent colour scale
       scale_fill_gradientn(fill_label,
-                           limits = c(0.5, 2),
-                           trans = "log10truncate",
                            colours = rev(cpal_cntry),
                            breaks = breaks,
-                           labels = labels)
+                           labels = labels,
+                           limits = c(0.5, 2),
+                           trans = "log10",
+                           oob = squish)
   }
 
   return(plot_mx_cntry_diff)

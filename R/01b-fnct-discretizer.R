@@ -1,3 +1,5 @@
+# Discretize mx Vector ----------------------------------------------------
+
 #' Discretize a Continuous mx Vector
 DiscretizeMx <- function (x) {
 
@@ -24,6 +26,8 @@ DiscretizeMx <- function (x) {
   return(result)
 
 }
+
+# Discretize mx Sex Ratio Vector ------------------------------------------
 
 #' Discretize a Continuous mx Sex Diff Vector
 DiscretizeMxSexDiff <- function (x) {
@@ -54,6 +58,8 @@ DiscretizeMxSexDiff <- function (x) {
   return(result)
 
 }
+
+# Discretize mx Country Ratio Vector --------------------------------------
 
 #' Discretize a Continuous mx Country Diff Vector
 DiscretizeMxCntryDiff <- function (x, input) {
