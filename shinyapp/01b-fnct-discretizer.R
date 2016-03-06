@@ -37,14 +37,16 @@ DiscretizeMxSexDiff <- function (x) {
               101/100, 125/100, 150/100, 175/100, 2/1, Inf)
   labels <- c(">100% Excess Male Mortality",
               "75 to 100%",
-              "   50 to 75%",
-              "      25 to 50%",
-              "         1 to 25%",
-              "            -1 to 1%",
-              "               1 to 25%",
-              "                  25 to 50%",
-              "                     50 to 75%",
-              "                        75 to 100%",
+              "50 to 75%",
+              "25 to 50%",
+              "1 to 25%",
+              "Equal Mortality",
+              # these spaces at the end are significant
+              # because I want the resulting factor levels to be unique
+              "1 to 25% ",
+              "25 to 50% ",
+              "50 to 75% " ,
+              "75 to 100% ",
               ">100% Excess Female Mortality")
 
   # generate timeline of discrete mx
@@ -68,14 +70,16 @@ DiscretizeMxCntryDiff <- function (x, input) {
               101/100, 125/100, 150/100, 175/100, 2/1, Inf)
   labels <- c(paste(">100% Excess Mortality", input$country_2),
               "75 to 100%",
-              "   50 to 75%",
-              "      25 to 50%",
-              "         1 to 25%",
-              "            -1 to 1%",
-              "               1 to 25%",
-              "                  25 to 50%",
-              "                     50 to 75%",
-              "                        75 to 100%",
+              "50 to 75%",
+              "25 to 50%",
+              "1 to 25%",
+              "Equal Mortality",
+              # these spaces at the end are significant
+              # because I want the resulting factor levels to be unique
+              "1 to 25% ",
+              "25 to 50% ",
+              "50 to 75% ",
+              "75 to 100% ",
               paste(">100% Excess Mortality", input$country_1))
 
   # generate timeline of discrete mx
