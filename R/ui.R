@@ -50,20 +50,26 @@ shinyUI(
              # Settings Panel ---------------------------------------------
 
              fluidRow(
+               # country selection
                conditionalPanel("(input.navbar == 'tab_mx' || input.navbar == 'tab_mx_sex_diff')",
                                 cntry_dropdown),
+               # country 2 selection (for country comparisions)
                conditionalPanel("(input.navbar == 'tab_mx_cntry_diff')",
                                 cntry1_diff_dropdown,
                                 cntry2_diff_dropdown),
+               # sex selection (if not in sex comparision mode)
                conditionalPanel("(input.navbar == 'tab_mx' || input.navbar == 'tab_mx_cntry_diff')",
                                 sex_radio),
                conditionalPanel("(input.navbar == 'tab_mx_sex_diff')",
                                 column(1)),
+               # advanced options
                column(2,
-                      fluidRow(advanced_switch),
+                      # on/off
+                      advanced_switch,
+                      # options
                       conditionalPanel("(input.advanced == true)",
-                                       fluidRow(timebase_radio),
-                                       fluidRow(scale_switch))),
+                                       timebase_radio,
+                                       scale_switch)),
                about)
 
   )
