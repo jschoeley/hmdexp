@@ -87,7 +87,7 @@ PlotMx <- function (x, cont) {
     plot_mx <-
       PlotLexisGrid(x) +
       # discrete heatmap
-      geom_tile(aes(fill = mx_disc)) +
+      geom_raster(aes(fill = mx_disc)) +
       # discrete colour scale
       scale_fill_manual(fill_label,
                         values = cpal_mx,
@@ -103,7 +103,7 @@ PlotMx <- function (x, cont) {
     plot_mx <-
       PlotLexisGrid(x) +
       # continuous heatmap
-      geom_tile(aes(fill = mx)) +
+      geom_raster(aes(fill = mx)) +
       # continuous colour scale
       scale_fill_gradientn(fill_label,
                            colours = cpal_mx,
@@ -133,7 +133,7 @@ PlotMxSexDiff <- function (x, cont) {
   plot_mx_sex_diff <-
     PlotLexisGrid(x) +
     # discrete heatmap
-    geom_tile(aes(fill = mx_sex_diff_disc)) +
+    geom_raster(aes(fill = mx_sex_diff_disc)) +
     # discrete divergent colour scale
     scale_fill_manual(fill_label,
                       values = rev(cpal_sex),
@@ -158,7 +158,7 @@ PlotMxSexDiff <- function (x, cont) {
     plot_mx_sex_diff <-
       PlotLexisGrid(x) +
       # continuous heatmap
-      geom_tile(aes(fill = mx_sex_diff)) +
+      geom_raster(aes(fill = mx_sex_diff)) +
       # continuous divergent colour scale
       scale_fill_gradientn(fill_label,
                            colours = rev(cpal_sex),
@@ -189,7 +189,7 @@ PlotMxCntryDiff <- function (x, cont, input) {
   plot_mx_cntry_diff <-
     PlotLexisGrid(x) +
     # discrete heatmap
-    geom_tile(aes(fill = mx_country_diff_disc)) +
+    geom_raster(aes(fill = mx_country_diff_disc)) +
     # discrete divergent colour scale
     scale_fill_manual(fill_label,
                       values = rev(cpal_cntry),
@@ -214,7 +214,7 @@ PlotMxCntryDiff <- function (x, cont, input) {
     plot_mx_cntry_diff <-
       PlotLexisGrid(x) +
       # continuous heatmap
-      geom_tile(aes(fill = mx_country_diff)) +
+      geom_raster(aes(fill = mx_country_diff)) +
       # continuous divergent colour scale
       scale_fill_gradientn(fill_label,
                            colours = rev(cpal_cntry),
