@@ -45,7 +45,7 @@ xlabel <- c(1750, paste0("'", seq(60, 90, 10)),
             1900, paste0("'", seq(10, 90, 10)),
             2000, "'10")
 # year limits
-xlimit <- c(1748, 2013)
+xlimit <- c(1748, 2015)
 
 # age breaks & labels for y-scale
 ybreak <- seq(0, 110, 10)
@@ -90,7 +90,7 @@ PlotMx <- function (x, cont) {
     plot_mx <-
       PlotLexisGrid(x) +
       # discrete heatmap
-      geom_raster(aes(fill = mx_disc)) +
+      geom_raster(aes(fill = mx_disc), na.rm = TRUE) +
       # discrete colour scale
       scale_fill_manual(fill_label,
                         values = cpal_mx,
@@ -106,7 +106,7 @@ PlotMx <- function (x, cont) {
     plot_mx <-
       PlotLexisGrid(x) +
       # continuous heatmap
-      geom_raster(aes(fill = mx)) +
+      geom_raster(aes(fill = mx), na.rm = TRUE) +
       # continuous colour scale
       scale_fill_gradientn(fill_label,
                            colours = cpal_mx,
@@ -136,7 +136,7 @@ PlotMxSexDiff <- function (x, cont) {
   plot_mx_sex_diff <-
     PlotLexisGrid(x) +
     # discrete heatmap
-    geom_raster(aes(fill = mx_sex_diff_disc)) +
+    geom_raster(aes(fill = mx_sex_diff_disc), na.rm = TRUE) +
     # discrete divergent colour scale
     scale_fill_manual(fill_label,
                       values = rev(cpal_sex),
@@ -161,7 +161,7 @@ PlotMxSexDiff <- function (x, cont) {
     plot_mx_sex_diff <-
       PlotLexisGrid(x) +
       # continuous heatmap
-      geom_raster(aes(fill = mx_sex_diff)) +
+      geom_raster(aes(fill = mx_sex_diff), na.rm = TRUE) +
       # continuous divergent colour scale
       scale_fill_gradientn(fill_label,
                            colours = rev(cpal_sex),
@@ -192,7 +192,7 @@ PlotMxCntryDiff <- function (x, cont, input) {
   plot_mx_cntry_diff <-
     PlotLexisGrid(x) +
     # discrete heatmap
-    geom_raster(aes(fill = mx_country_diff_disc)) +
+    geom_raster(aes(fill = mx_country_diff_disc), na.rm = TRUE) +
     # discrete divergent colour scale
     scale_fill_manual(fill_label,
                       values = rev(cpal_cntry),
@@ -217,7 +217,7 @@ PlotMxCntryDiff <- function (x, cont, input) {
     plot_mx_cntry_diff <-
       PlotLexisGrid(x) +
       # continuous heatmap
-      geom_raster(aes(fill = mx_country_diff)) +
+      geom_raster(aes(fill = mx_country_diff), na.rm = TRUE) +
       # continuous divergent colour scale
       scale_fill_gradientn(fill_label,
                            colours = rev(cpal_cntry),
