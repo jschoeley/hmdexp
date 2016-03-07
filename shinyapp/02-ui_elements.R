@@ -83,15 +83,8 @@ about <-
          p("Data Source:", br(),
            a(href = "http://www.mortality.org/", "Human Mortality Database"),
            "retrieved March 6, 2016"),
-         p("A big thanks goes towards the Human Mortality Database team.
-           Their magnificient work makes it possible for laymen, students and
-           researchers alike to explore the incredible rise of human life expectancy,
-           the mysteries of the gender differences in survival or the global
-           variation in mortality patterns. This project would not be possible
-           without free access to the HMD data."),
-         p("If you want to dig into the underlying data yourself just go to",
-           a(href = "http://www.mortality.org/", "http://www.mortality.org/"),
-           "and register.")
+         p("Register at", a(href = "http://www.mortality.org/", "http://www.mortality.org/"),
+           "to download the data and learn more about it.")
   )
 
 # UI Functions ------------------------------------------------------------
