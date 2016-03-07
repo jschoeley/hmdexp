@@ -88,7 +88,9 @@ shinyServer(function(input, output, session) {
   output$plot_mx <- renderPlot({
 
     # generate heatmap
-    plot_mx <- PlotMx(dataset_mx(), input$cont_scale)
+    plot_mx <- PlotMx(dataset_mx(),
+                      cont = input$cont_scale,
+                      grid_on_top = input$grid_on_top)
 
     print(plot_mx)
 
@@ -98,7 +100,9 @@ shinyServer(function(input, output, session) {
 
   output$plot_mx_sex_diff <- renderPlot({
 
-    plot_mx_sex_diff <- PlotMxSexDiff(dataset_mx_sex_diff(), input$cont_scale)
+    plot_mx_sex_diff <- PlotMxSexDiff(dataset_mx_sex_diff(),
+                                      cont = input$cont_scale,
+                                      grid_on_top = input$grid_on_top)
 
     print(plot_mx_sex_diff)
 
@@ -108,7 +112,10 @@ shinyServer(function(input, output, session) {
 
   output$plot_mx_cntry_diff <- renderPlot({
 
-    plot_mx_cntry_diff <- PlotMxCntryDiff(dataset_mx_cntry_diff(), input$cont_scale, input)
+    plot_mx_cntry_diff <- PlotMxCntryDiff(dataset_mx_cntry_diff(),
+                                          cont = input$cont_scale,
+                                          grid_on_top = input$grid_on_top,
+                                          input = input)
 
     print(plot_mx_cntry_diff)
 

@@ -69,7 +69,8 @@ shinyUI(
                       # options
                       conditionalPanel("(input.advanced == true)",
                                        timebase_radio,
-                                       scale_switch)),
+                                       scale_switch,
+                                       grid_on_top_switch)),
                about)
 
   )

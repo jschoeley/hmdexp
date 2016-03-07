@@ -47,11 +47,11 @@ sex_radio <-
                       selected = "fm")
   )
 
-# scale switch
-scale_switch <-
-         checkboxInput(inputId = "cont_scale",
-                       label   = "Continuous Scale",
-                       value   = FALSE)
+# show/hide advanced options
+advanced_switch <-
+  checkboxInput(inputId = "advanced",
+                label   = "Advanced Options",
+                value   = FALSE)
 
 # timebase radio button
 timebase_radio <-
@@ -61,9 +61,16 @@ timebase_radio <-
                                      Cohort  = "cohort"),
                       selected = "period")
 
-advanced_switch <-
-  checkboxInput(inputId = "advanced",
-                label   = "Advanced Options",
+# scale switch
+scale_switch <-
+  checkboxInput(inputId = "cont_scale",
+                label   = "Continuous Scale",
+                value   = FALSE)
+
+# option to put grid on top
+grid_on_top_switch <-
+  checkboxInput(inputId = "grid_on_top",
+                label   = "Grid on Top",
                 value   = FALSE)
 
 # about
@@ -74,7 +81,8 @@ about <-
            a(href = "http://www.sdu.dk/en/om_sdu/institutter_centre/maxo", br(),
              "Max-Planck Odense Center on the Biodemography of Aging")),
          p("Data Source:", br(),
-           a(href = "http://www.mortality.org/", "Human Mortality Database")),
+           a(href = "http://www.mortality.org/", "Human Mortality Database"),
+           "retrieved March 6, 2016"),
          p("A big thanks goes towards the Human Mortality Database team.
            Their magnificient work makes it possible for laymen, students and
            researchers alike to explore the incredible rise of human life expectancy,

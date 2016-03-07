@@ -65,10 +65,10 @@ age_lines <- geom_hline(yintercept = ybreak,
 # Prepare Canvas ----------------------------------------------------------
 
 #' Prepare the Heatmap Plot Canvas
-PrepareCanvas <- function (x) {
+PrepareCanvas <- function (x, grid_on_top) {
   # shift the tiles away from the midpoint
   # so that they align with the Lexis grid
-  ggplot(x, aes(x = year+0.5, y = age+0.5)) +
+  canvas <- ggplot(x, aes(x = year+0.5, y = age+0.5)) +
     # custom xy scale labels
     scale_x_continuous("Year",
                        breaks = xbreak, labels = xlabel,
@@ -80,12 +80,19 @@ PrepareCanvas <- function (x) {
     coord_equal() +
     # add theme
     theme_hmdexp
+
+  # IF the grid should be drawn below the heatmap, add it now
+  if (grid_on_top == FALSE) {
+    canvas <- canvas + cohort_lines + period_lines + age_lines
+  }
+
+  return(canvas)
 }
 
 # Plot mx -----------------------------------------------------------------
 
 #' Plot mx Values
-PlotMx <- function (x, cont) {
+PlotMx <- function (x, cont, grid_on_top) {
 
   # title for colour scale legend
   fill_label <- expression(atop(atop("Deaths per",
@@ -95,9 +102,7 @@ PlotMx <- function (x, cont) {
   # add discrete heatmap to plot
   if (cont == FALSE) {
     plot_mx <-
-      PrepareCanvas(x) +
-      # lexis grid
-      cohort_lines + period_lines + age_lines +
+      PrepareCanvas(x, grid_on_top) +
       # discrete heatmap
       geom_raster(aes(fill = mx_disc), na.rm = TRUE) +
       # discrete colour scale
@@ -114,9 +119,7 @@ PlotMx <- function (x, cont) {
     breaks <- c(0.0001, 0.001, 0.01, 0.1, 1)
     labels <- breaks * 10000
     plot_mx <-
-      PrepareCanvas(x) +
-      # lexis grid
-      cohort_lines + period_lines + age_lines +
+      PrepareCanvas(x, grid_on_top) +
       # continuous heatmap
       geom_raster(aes(fill = mx), na.rm = TRUE) +
       # continuous colour scale
@@ -129,6 +132,13 @@ PlotMx <- function (x, cont) {
                            trans  = "log10")
   }
 
+  # IF grid should be drawn over data, add it now
+  # IF not the grid lines have already been added by `PrepareCanvas()`
+  if (grid_on_top == TRUE) {
+    plot_mx <- plot_mx +
+      cohort_lines + period_lines + age_lines
+  }
+
   return(plot_mx)
 
 }
@@ -136,7 +146,7 @@ PlotMx <- function (x, cont) {
 # Plot mx Sex Differences -------------------------------------------------
 
 #' Plot mx Sex Differences
-PlotMxSexDiff <- function (x, cont) {
+PlotMxSexDiff <- function (x, cont, grid_on_top) {
 
   # title for colour scale legend
   fill_label <- expression(atop(atop("Mortality Rate Ratio between",
@@ -146,9 +156,7 @@ PlotMxSexDiff <- function (x, cont) {
   # add discrete heatmap to plot
   if (cont == FALSE) {
   plot_mx_sex_diff <-
-    PrepareCanvas(x) +
-    # lexis grid
-    cohort_lines + period_lines + age_lines +
+    PrepareCanvas(x, grid_on_top) +
     # discrete heatmap
     geom_raster(aes(fill = mx_sex_diff_disc), na.rm = TRUE) +
     # discrete divergent colour scale
@@ -173,9 +181,7 @@ PlotMxSexDiff <- function (x, cont) {
                 "100% Excess Male Mortality")
 
     plot_mx_sex_diff <-
-      PrepareCanvas(x) +
-      # lexis grid
-      cohort_lines + period_lines + age_lines +
+      PrepareCanvas(x, grid_on_top) +
       # continuous heatmap
       geom_raster(aes(fill = mx_sex_diff), na.rm = TRUE) +
       # continuous divergent colour scale
@@ -189,6 +195,13 @@ PlotMxSexDiff <- function (x, cont) {
                            oob     = squish)
   }
 
+  # IF grid should be drawn over data, add it now
+  # IF not the grid lines have already been added by `PrepareCanvas()`
+  if (grid_on_top == TRUE) {
+    plot_mx_sex_diff <- plot_mx_sex_diff +
+      cohort_lines + period_lines + age_lines
+  }
+
   return(plot_mx_sex_diff)
 
 }
@@ -196,7 +209,7 @@ PlotMxSexDiff <- function (x, cont) {
 # Plot mx Country Differences ---------------------------------------------
 
 #' Plot mx Country Differences
-PlotMxCntryDiff <- function (x, cont, input) {
+PlotMxCntryDiff <- function (x, cont, grid_on_top, input) {
 
   # title for colour scale legend
   fill_label <- expression(atop(atop("Mortality Rate Ratio between",
@@ -206,9 +219,7 @@ PlotMxCntryDiff <- function (x, cont, input) {
   # add discrete heatmap to plot
   if (cont == FALSE) {
   plot_mx_cntry_diff <-
-    PrepareCanvas(x) +
-    # lexis grid
-    cohort_lines + period_lines + age_lines +
+    PrepareCanvas(x, grid_on_top) +
     # discrete heatmap
     geom_raster(aes(fill = mx_country_diff_disc), na.rm = TRUE) +
     # discrete divergent colour scale
@@ -233,9 +244,7 @@ PlotMxCntryDiff <- function (x, cont, input) {
                 paste("100% Excess Mortality", input$country_1))
 
     plot_mx_cntry_diff <-
-      PrepareCanvas(x) +
-      # lexis grid
-      cohort_lines + period_lines + age_lines +
+      PrepareCanvas(x, grid_on_top) +
       # continuous heatmap
       geom_raster(aes(fill = mx_country_diff), na.rm = TRUE) +
       # continuous divergent colour scale
@@ -247,6 +256,13 @@ PlotMxCntryDiff <- function (x, cont, input) {
                            # squish outside limit values
                            # into extremes of colourscale
                            oob = squish)
+  }
+
+  # IF grid should be drawn over data, add it now
+  # IF not the grid lines have already been added by `PrepareCanvas()`
+  if (grid_on_top == TRUE) {
+    plot_mx_cntry_diff <- plot_mx_cntry_diff +
+      cohort_lines + period_lines + age_lines
   }
 
   return(plot_mx_cntry_diff)
