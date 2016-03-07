@@ -1,8 +1,8 @@
 name: hmdexp-devel
 account: jschoeley
 server: shinyapps.io
-bundleId: 278828
-url: https://jschoeley.shinyapps.io/hmdexp-devel
-when: 1443708320.7401
+bundleId: 389532
+url: https://jschoeley.shinyapps.io/hmdexp-devel/
+when: 1457369346.81736
 asMultiple: FALSE
 asStatic: FALSE
