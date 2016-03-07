@@ -52,10 +52,13 @@ ybreak <- seq(0, 110, 10)
 # age limits
 ylimit <- c(0, 112)
 
-# Lexis Grid Base Plot ----------------------------------------------------
+
+# Base Plot (Data + Lexis Grid) -------------------------------------------
 
 PlotLexisGrid <- function (x) {
-  ggplot(x, aes(x = year, y = age)) +
+  # shift the tiles away from the midpoint
+  # so that they align with the Lexis grid
+  ggplot(x, aes(x = year+0.5, y = age+0.5)) +
     # cohort lines
     geom_abline(intercept = seq(-2000, 2000, 10),
                 colour = "grey50", size = 0.25, lty = 2) +

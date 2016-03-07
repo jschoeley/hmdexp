@@ -38,8 +38,8 @@ hmd_mx %>%
   na.omit() -> hmd_mx
 
 # save data for use in shiny app (rounded to 5 digits to save space)
-hmd_mx %>% mutate(mx = round(mx, 5)) %>%
-  save(file = "./shinyapp/data/hmd_mx.Rdata")
+hmd_mx %>% mutate(mx = round(mx, 5)) -> hmd_mx
+save(hmd_mx, file = "./shinyapp/data/hmd_mx.Rdata")
 
 # derive data set for mortality rate sex ratios
 hmd_mx %>%
@@ -53,5 +53,5 @@ hmd_mx %>%
   na.omit() -> hmd_mx_sex_diff
 
 # save data for use in shiny app (rounded to 5 digits to save space)
-hmd_mx_sex_diff %>% mutate(mx_sex_diff = round(mx_sex_diff, 5)) %>%
-save(file = "./shinyapp/data/hmd_mx_sex_diff.Rdata")
+hmd_mx_sex_diff %>% mutate(mx_sex_diff = round(mx_sex_diff, 5)) -> hmd_mx_sex_diff
+save(hmd_mx_sex_diff, file = "./shinyapp/data/hmd_mx_sex_diff.Rdata")
