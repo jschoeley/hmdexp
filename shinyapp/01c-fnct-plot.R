@@ -1,10 +1,10 @@
-# Plot Theme --------------------------------------------------------------
+# Setup Plot Theme --------------------------------------------------------
 
 theme_hmdexp <-
   theme(plot.margin       = unit(c(0, 0, 0, 0), units = "cm"),
         panel.background  = element_blank(),
         plot.background   = element_blank(),
-        panel.grid.major  = element_line(colour = "grey50", size = 0.25),
+        panel.grid.major  = element_blank(),
         panel.grid.minor  = element_blank(),
         legend.background = element_blank(),
         axis.title        = element_text(colour = "grey50"),
@@ -13,7 +13,7 @@ theme_hmdexp <-
         legend.text       = element_text(colour = "grey50"),
         legend.title      = element_text(colour = "grey50"))
 
-# Plot Colours ------------------------------------------------------------
+# Setup Plot Colours ------------------------------------------------------
 
 # dput(RColorBrewer::brewer.pal(9, "PuBuGn"))
 cpal_mx <- c("#FFF7FB", "#ECE2F0", "#D0D1E6",
@@ -32,7 +32,7 @@ cpal_cntry <- c("#543005", "#8C510A", "#BF812D",
                 "#C7EAE5", "#80CDC1", "#35978F",
                 "#01665E", "#003C30")
 
-# Plot Lexis Grid Breaks --------------------------------------------------
+# Setup Lexis Grid --------------------------------------------------------
 
 # year breaks for x-scale
 xbreak <- c(1750, seq(1760, 1790, 10),
@@ -52,16 +52,23 @@ ybreak <- seq(0, 110, 10)
 # age limits
 ylimit <- c(0, 112)
 
+# cohort lines
+cohort_lines <-  geom_abline(intercept = seq(-2000, 2000, 10),
+                             colour = "grey50", size = 0.25, lty = 2)
+# period lines
+period_lines <- geom_vline(xintercept = xbreak,
+                           colour = "grey50", size = 0.25)
+# age lines
+age_lines <- geom_hline(yintercept = ybreak,
+                        colour = "grey50", size = 0.25)
 
-# Base Plot (Data + Lexis Grid) -------------------------------------------
+# Prepare Canvas ----------------------------------------------------------
 
-PlotLexisGrid <- function (x) {
+#' Prepare the Heatmap Plot Canvas
+PrepareCanvas <- function (x) {
   # shift the tiles away from the midpoint
   # so that they align with the Lexis grid
   ggplot(x, aes(x = year+0.5, y = age+0.5)) +
-    # cohort lines
-    geom_abline(intercept = seq(-2000, 2000, 10),
-                colour = "grey50", size = 0.25, lty = 2) +
     # custom xy scale labels
     scale_x_continuous("Year",
                        breaks = xbreak, labels = xlabel,
@@ -88,7 +95,9 @@ PlotMx <- function (x, cont) {
   # add discrete heatmap to plot
   if (cont == FALSE) {
     plot_mx <-
-      PlotLexisGrid(x) +
+      PrepareCanvas(x) +
+      # lexis grid
+      cohort_lines + period_lines + age_lines +
       # discrete heatmap
       geom_raster(aes(fill = mx_disc), na.rm = TRUE) +
       # discrete colour scale
@@ -97,6 +106,7 @@ PlotMx <- function (x, cont) {
                         # plot the full scale even
                         # if not all colours are used
                         drop = FALSE) +
+      # reverse legend
       guides(fill = guide_legend(reverse = TRUE))
   }
   # add continuous heatmap to plot
@@ -104,7 +114,9 @@ PlotMx <- function (x, cont) {
     breaks <- c(0.0001, 0.001, 0.01, 0.1, 1)
     labels <- breaks * 10000
     plot_mx <-
-      PlotLexisGrid(x) +
+      PrepareCanvas(x) +
+      # lexis grid
+      cohort_lines + period_lines + age_lines +
       # continuous heatmap
       geom_raster(aes(fill = mx), na.rm = TRUE) +
       # continuous colour scale
@@ -134,7 +146,9 @@ PlotMxSexDiff <- function (x, cont) {
   # add discrete heatmap to plot
   if (cont == FALSE) {
   plot_mx_sex_diff <-
-    PlotLexisGrid(x) +
+    PrepareCanvas(x) +
+    # lexis grid
+    cohort_lines + period_lines + age_lines +
     # discrete heatmap
     geom_raster(aes(fill = mx_sex_diff_disc), na.rm = TRUE) +
     # discrete divergent colour scale
@@ -159,7 +173,9 @@ PlotMxSexDiff <- function (x, cont) {
                 "100% Excess Male Mortality")
 
     plot_mx_sex_diff <-
-      PlotLexisGrid(x) +
+      PrepareCanvas(x) +
+      # lexis grid
+      cohort_lines + period_lines + age_lines +
       # continuous heatmap
       geom_raster(aes(fill = mx_sex_diff), na.rm = TRUE) +
       # continuous divergent colour scale
@@ -190,7 +206,9 @@ PlotMxCntryDiff <- function (x, cont, input) {
   # add discrete heatmap to plot
   if (cont == FALSE) {
   plot_mx_cntry_diff <-
-    PlotLexisGrid(x) +
+    PrepareCanvas(x) +
+    # lexis grid
+    cohort_lines + period_lines + age_lines +
     # discrete heatmap
     geom_raster(aes(fill = mx_country_diff_disc), na.rm = TRUE) +
     # discrete divergent colour scale
@@ -215,7 +233,9 @@ PlotMxCntryDiff <- function (x, cont, input) {
                 paste("100% Excess Mortality", input$country_1))
 
     plot_mx_cntry_diff <-
-      PlotLexisGrid(x) +
+      PrepareCanvas(x) +
+      # lexis grid
+      cohort_lines + period_lines + age_lines +
       # continuous heatmap
       geom_raster(aes(fill = mx_country_diff), na.rm = TRUE) +
       # continuous divergent colour scale
